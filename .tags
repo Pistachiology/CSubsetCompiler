@@ -1,0 +1,404 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AST_add	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_eq	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_ge	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_gt	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_le	csp.c	/^    AST_lt, AST_le$/;"	e	enum:AST_operator	file:
+AST_lt	csp.c	/^    AST_lt, AST_le$/;"	e	enum:AST_operator	file:
+AST_minus	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_mod	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_mult	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_neq	csp.c	/^    AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, $/;"	e	enum:AST_operator	file:
+AST_operator	csp.c	/^enum AST_operator { $/;"	g	file:
+A_ArrayExp	csp.c	/^A_exp A_ArrayExp(A_pos pos, A_exp var, A_exp exp){$/;"	f
+A_AssignExp	csp.c	/^A_exp A_AssignExp(A_pos pos, A_exp var, A_exp exp){$/;"	f
+A_IfExp	csp.c	/^A_exp A_IfExp(A_pos pos, A_exp test, A_expList then, A_expList elsee){$/;"	f
+A_Op1Exp	csp.c	/^A_exp A_Op1Exp(A_pos pos, A_exp exp, A_oper oper){$/;"	f
+A_OpExp	csp.c	/^A_exp A_OpExp(A_pos pos, A_oper oper, A_exp left, A_exp right){$/;"	f
+A_StructExp	csp.c	/^A_exp A_StructExp(A_pos pos, A_exp var, A_exp exp){$/;"	f
+A_VarExp	csp.c	/^A_exp A_VarExp(A_pos pos, A_var var){$/;"	f
+A_WhileExp	csp.c	/^A_exp A_WhileExp(A_pos pos, A_exp test, A_expList body){$/;"	f
+A_arrayExp	csp.c	/^            A_whileExp, A_arrayExp, A_op1Exp,$/;"	e	enum:A_exp_::__anon7	file:
+A_assignExp	csp.c	/^            A_opExp, A_assignExp, A_ifExp,$/;"	e	enum:A_exp_::__anon7	file:
+A_call	csp.c	/^A_exp A_call(A_pos pos, S_symbol func, A_expList args){$/;"	f
+A_callExp	csp.c	/^    enum {  A_varExp, A_intExp, A_callExp,$/;"	e	enum:A_exp_::__anon7	file:
+A_exp	csp.c	/^typedef struct A_exp_ *A_exp;$/;"	t	typeref:struct:A_exp_	file:
+A_expList	csp.c	/^typedef struct A_expList_ *A_expList;$/;"	t	typeref:struct:A_expList_	file:
+A_expList_	csp.c	/^struct A_expList_{$/;"	s	file:
+A_exp_	csp.c	/^struct A_exp_$/;"	s	file:
+A_ifExp	csp.c	/^            A_opExp, A_assignExp, A_ifExp,$/;"	e	enum:A_exp_::__anon7	file:
+A_intExp	csp.c	/^    enum {  A_varExp, A_intExp, A_callExp,$/;"	e	enum:A_exp_::__anon7	file:
+A_op1Exp	csp.c	/^            A_whileExp, A_arrayExp, A_op1Exp,$/;"	e	enum:A_exp_::__anon7	file:
+A_opExp	csp.c	/^            A_opExp, A_assignExp, A_ifExp,$/;"	e	enum:A_exp_::__anon7	file:
+A_oper	css.c	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	t	typeref:enum:__anon17	file:
+A_oper	css.h	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	t	typeref:enum:__anon18
+A_pos	csp.c	/^typedef unsigned int A_pos; $/;"	t	file:
+A_structExp	csp.c	/^            A_structExp$/;"	e	enum:A_exp_::__anon7	file:
+A_var	csp.c	/^typedef char* A_var;$/;"	t	file:
+A_varExp	csp.c	/^    enum {  A_varExp, A_intExp, A_callExp,$/;"	e	enum:A_exp_::__anon7	file:
+A_whileExp	csp.c	/^            A_whileExp, A_arrayExp, A_op1Exp,$/;"	e	enum:A_exp_::__anon7	file:
+AddToList	csp.c	/^static CSGNode AddToList(CSGNode *root, CSSIdent *id)$/;"	f	file:
+AssignmentM	csp.c	/^static A_exp AssignmentM(CSGNode *x)$/;"	f	file:
+Block	cfg.h	/^typedef struct BlockDesc *Block; $/;"	t	typeref:struct:BlockDesc
+BlockDesc	cfg.h	/^typedef struct BlockDesc {$/;"	s
+BlockDesc	cfg.h	/^} BlockDesc;$/;"	t	typeref:struct:BlockDesc
+CSGAddr	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGAddr	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGAdjustLevel	csg.c	/^void CSGAdjustLevel(int n)$/;"	f
+CSGArray	csg.c	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon2	file:
+CSGArray	csg.h	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon6
+CSGBJump	csg.c	/^void CSGBJump(CSGNode lbl)$/;"	f
+CSGBoolean	csg.c	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon2	file:
+CSGBoolean	csg.h	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon6
+CSGCall	csg.c	/^void CSGCall(CSGNode x)$/;"	f
+CSGClose	csg.c	/^void CSGClose(void)$/;"	f
+CSGConst	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGConst	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGDecode	csg.c	/^void CSGDecode(void)$/;"	f
+CSGEnter	csg.c	/^void CSGEnter(int size)$/;"	f
+CSGEntryPoint	csg.c	/^void CSGEntryPoint(void)$/;"	f
+CSGFJump	csg.c	/^void CSGFJump(CSGNode *lbl)$/;"	f
+CSGField	csg.c	/^void CSGField(CSGNode *x, CSGNode y)  \/* x = x.y *\/$/;"	f
+CSGFixLink	csg.c	/^void CSGFixLink(CSGNode lbl)$/;"	f
+CSGFld	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGFld	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGIOCall	csg.c	/^void CSGIOCall(CSGNode x, CSGNode y)$/;"	f
+CSGIndex	csg.c	/^void CSGIndex(CSGNode *x, CSGNode y)  \/* x = x[y] *\/$/;"	f
+CSGInit	csg.c	/^void CSGInit(void)$/;"	f
+CSGInitLabel	csg.c	/^void CSGInitLabel(CSGNode *lbl)$/;"	f
+CSGInst	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGInst	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGInteger	csg.c	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon2	file:
+CSGInteger	csg.h	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon6
+CSGMakeConstNodeDesc	csg.c	/^void CSGMakeConstNodeDesc(CSGNode *x, CSGType typ, long long val)$/;"	f
+CSGMakeNodeDesc	csg.c	/^void CSGMakeNodeDesc(CSGNode *x, CSGNode y)$/;"	f
+CSGNode	csg.c	/^typedef struct CSGNodeDesc *CSGNode;$/;"	t	typeref:struct:CSGNodeDesc	file:
+CSGNode	csg.h	/^typedef struct CSGNodeDesc *CSGNode;$/;"	t	typeref:struct:CSGNodeDesc
+CSGNodeDesc	csg.c	/^typedef struct CSGNodeDesc {$/;"	s	file:
+CSGNodeDesc	csg.c	/^} CSGNodeDesc;$/;"	t	typeref:struct:CSGNodeDesc	file:
+CSGNodeDesc	csg.h	/^typedef struct CSGNodeDesc {$/;"	s
+CSGNodeDesc	csg.h	/^} CSGNodeDesc;$/;"	t	typeref:struct:CSGNodeDesc
+CSGOp1	csg.c	/^void CSGOp1(int op, CSGNode *x)  \/* x = op x *\/$/;"	f
+CSGOp2	csg.c	/^void CSGOp2(int op, CSGNode *x, CSGNode y)  \/* x = x op y *\/$/;"	f
+CSGOpen	csg.c	/^void CSGOpen(void)$/;"	f
+CSGParameter	csg.c	/^void CSGParameter(CSGNode *x, CSGType ftyp, signed char class)$/;"	f
+CSGProc	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGProc	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGRelation	csg.c	/^void CSGRelation(int op, CSGNode *x, CSGNode y)$/;"	f
+CSGReturn	csg.c	/^void CSGReturn(int size)$/;"	f
+CSGSProc	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGSProc	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGSetLabel	csg.c	/^void CSGSetLabel(CSGNode *lbl)$/;"	f
+CSGStart	csg.c	/^void CSGStart(int size)$/;"	f
+CSGStore	csg.c	/^void CSGStore(CSGNode x, CSGNode y)  \/* x = y *\/$/;"	f
+CSGStruct	csg.c	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon2	file:
+CSGStruct	csg.h	/^enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};$/;"	e	enum:__anon6
+CSGTestBool	csg.c	/^void CSGTestBool(CSGNode *x)$/;"	f
+CSGTyp	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGTyp	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGType	csg.c	/^typedef struct CSGTypeDesc *CSGType;$/;"	t	typeref:struct:CSGTypeDesc	file:
+CSGType	csg.h	/^typedef struct CSGTypeDesc *CSGType;$/;"	t	typeref:struct:CSGTypeDesc
+CSGTypeDesc	csg.c	/^typedef struct CSGTypeDesc {$/;"	s	file:
+CSGTypeDesc	csg.c	/^} CSGTypeDesc;$/;"	t	typeref:struct:CSGTypeDesc	file:
+CSGTypeDesc	csg.h	/^typedef struct CSGTypeDesc {$/;"	s
+CSGTypeDesc	csg.h	/^} CSGTypeDesc;$/;"	t	typeref:struct:CSGTypeDesc
+CSGVar	csg.c	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon1	file:
+CSGVar	csg.h	/^enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};$/;"	e	enum:__anon4
+CSGboolType	csg.c	/^CSGType CSGlongType, CSGboolType;$/;"	v
+CSGcurlev	csg.c	/^char CSGcurlev;$/;"	v
+CSGlongType	csg.c	/^CSGType CSGlongType, CSGboolType;$/;"	v
+CSGpc	csg.c	/^CSGNode CSGpc;$/;"	v
+CSSError	css.c	/^void CSSError(char *msg)$/;"	f
+CSSGet	css.c	/^int CSSGet(void)$/;"	f
+CSSIdent	css.c	/^typedef char CSSIdent[CSSidlen];$/;"	t	file:
+CSSIdent	css.h	/^typedef char CSSIdent[CSSidlen];$/;"	t
+CSSInit	css.c	/^void CSSInit(char *filename)$/;"	f
+CSSbecomes	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSbecomes	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSScomma	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSScomma	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSconst	css.c	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	e	enum:__anon17	file:
+CSSconst	css.h	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	e	enum:__anon18
+CSSdiv	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSdiv	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSelse	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSelse	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSSeof	css.c	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	e	enum:__anon17	file:
+CSSeof	css.h	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	e	enum:__anon18
+CSSeql	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSeql	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSgeq	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSgeq	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSgtr	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSgtr	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSid	css.c	/^CSSIdent CSSid;$/;"	v
+CSSident	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSident	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSSidlen	css.c	/^#define CSSidlen /;"	d	file:
+CSSidlen	css.h	/^#define CSSidlen /;"	d
+CSSif	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSif	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSSlbrace	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSlbrace	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSlbrak	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSlbrak	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSleq	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSleq	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSlparen	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSlparen	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSlss	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSlss	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSminus	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSminus	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSmod	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSmod	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSneq	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSneq	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSnumber	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSnumber	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSSperiod	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSperiod	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSplus	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSSplus	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSrbrace	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSrbrace	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSrbrak	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSrbrak	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSrparen	css.c	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon17	file:
+CSSrparen	css.h	/^      CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,$/;"	e	enum:__anon18
+CSSsemicolon	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSsemicolon	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSSstruct	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSstruct	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+CSStimes	css.c	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon17	file:
+CSStimes	css.h	/^typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,$/;"	e	enum:__anon18
+CSSval	css.c	/^unsigned long long CSSval;$/;"	v
+CSSvoid	css.c	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	e	enum:__anon17	file:
+CSSvoid	css.h	/^      CSSconst, CSSvoid, CSSeof} A_oper;$/;"	e	enum:__anon18
+CSSwhile	css.c	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon17	file:
+CSSwhile	css.h	/^      CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,$/;"	e	enum:__anon18
+Comment	css.c	/^static void Comment(void)$/;"	f	file:
+CommentLine	css.c	/^static void CommentLine(void)$/;"	f	file:
+Compile	csp.c	/^static void Compile(char *filename)$/;"	f	file:
+ConstExpression	csp.c	/^static int ConstExpression(CSGNode *expr)$/;"	f	file:
+ConstantDeclaration	csp.c	/^static int ConstantDeclaration(CSGNode *root)$/;"	f	file:
+DesignatorM	csp.c	/^static A_exp DesignatorM(CSGNode *x)$/;"	f	file:
+EqualityExpr	csp.c	/^static A_exp EqualityExpr(CSGNode *x)$/;"	f	file:
+ExpList	csp.c	/^static A_expList ExpList(CSGNode proc)$/;"	f	file:
+Expression	csp.c	/^static A_exp Expression(CSGNode *x)$/;"	f	file:
+FP	csg.c	/^static CSGNode code, entrypc, FP, GP;$/;"	v	file:
+FPSection	csp.c	/^static void FPSection(CSGNode *root, int *paddr)$/;"	f	file:
+Factor	csp.c	/^static A_exp Factor(CSGNode *x)$/;"	f	file:
+FieldList	csp.c	/^static void FieldList(CSGType type)$/;"	f	file:
+FindObj	csp.c	/^static CSGNode FindObj(CSGNode *root, CSSIdent *id)$/;"	f	file:
+FormalParameters	csp.c	/^static A_exp FormalParameters(CSGNode *root)$/;"	f	file:
+GCD	samples/gcd.cs	/^void GCD(long a, long b)$/;"	m
+GP	csg.c	/^static CSGNode code, entrypc, FP, GP;$/;"	v	file:
+IdentArray	csp.c	/^static void IdentArray(CSGNode *root, CSGType type)$/;"	f	file:
+IdentList	csp.c	/^static void IdentList(CSGNode *root, CSGType type)$/;"	f	file:
+Identifier	css.c	/^static void Identifier(void)$/;"	f	file:
+IfStatement	csp.c	/^static A_exp IfStatement(void)$/;"	f	file:
+InitObj	csp.c	/^static void InitObj(CSGNode obj, signed char class, CSGNode dsc, CSGType type, long long val)$/;"	f	file:
+InitProcObj	csp.c	/^static void InitProcObj(CSGNode obj, signed char class, CSGNode dsc, CSGType type, CSGNode entrypt)$/;"	f	file:
+InsertObj	csp.c	/^static void InsertObj(CSGNode *root, signed char class, CSGType type, CSSIdent name, long long val)$/;"	f	file:
+Load	csg.c	/^static void Load(CSGNode *x)$/;"	f	file:
+Number	css.c	/^static void Number(void)$/;"	f	file:
+PrintBrakNode	csg.c	/^static void PrintBrakNode(CSGNode x)$/;"	f	file:
+PrintNode	csg.c	/^static void PrintNode(CSGNode x)$/;"	f	file:
+ProcedureBody	csp.c	/^static A_expList ProcedureBody(CSGNode *proc)$/;"	f	file:
+ProcedureCallM	csp.c	/^static A_exp ProcedureCallM(CSGNode obj, CSGNode *x)$/;"	f	file:
+ProcedureDeclaration	csp.c	/^static A_exp ProcedureDeclaration(void)$/;"	f	file:
+ProcedureHeading	csp.c	/^static void ProcedureHeading(CSGNode *proc)$/;"	f	file:
+Program	csp.c	/^static void Program(void)$/;"	f	file:
+PutOp	csg.c	/^static CSGNode PutOp(int op)$/;"	f	file:
+PutOpNode	csg.c	/^static CSGNode PutOpNode(int op, CSGNode x)$/;"	f	file:
+PutOpNodeNode	csg.c	/^static CSGNode PutOpNodeNode(int op, CSGNode x, CSGNode y)$/;"	f	file:
+Quicksort	samples/qsort.cs	/^void Quicksort(long l, long r)$/;"	m
+ReadLong	samples/collatz.cs	/^#define ReadLong(/;"	d	file:
+ReadLong	samples/gcd.cs	/^#define ReadLong(/;"	d	file:
+ReadLong	samples/ifwhile.cs	/^#define ReadLong(/;"	d	file:
+ReadLong	samples/qsort.cs	/^#define ReadLong(/;"	d	file:
+RecurseArray	csp.c	/^static void RecurseArray(CSGType *type)$/;"	f	file:
+S_symbol	csp.c	/^typedef char* S_symbol;$/;"	t	file:
+SimpleExpression	csp.c	/^static A_exp SimpleExpression(CSGNode *x)$/;"	f	file:
+Statement	csp.c	/^static A_exp Statement(void)$/;"	f	file:
+StatementSequence	csp.c	/^static A_expList StatementSequence(void)$/;"	f	file:
+StructType	csp.c	/^static void StructType(CSGType *type)$/;"	f	file:
+Term	csp.c	/^static A_exp Term(CSGNode *x)$/;"	f	file:
+TestInt	csg.c	/^static void TestInt(CSGNode x)$/;"	f	file:
+Type	csp.c	/^static void Type(CSGType *type)$/;"	f	file:
+VariableDeclaration	csp.c	/^static A_var VariableDeclaration(CSGNode *root)$/;"	f	file:
+WhileStatement	csp.c	/^static A_exp WhileStatement(void)$/;"	f	file:
+WriteLine	samples/collatz.cs	/^#define WriteLine(/;"	d	file:
+WriteLine	samples/gcd.cs	/^#define WriteLine(/;"	d	file:
+WriteLine	samples/ifwhile.cs	/^#define WriteLine(/;"	d	file:
+WriteLine	samples/qsort.cs	/^#define WriteLine(/;"	d	file:
+WriteLong	samples/collatz.cs	/^#define WriteLong(/;"	d	file:
+WriteLong	samples/gcd.cs	/^#define WriteLong(/;"	d	file:
+WriteLong	samples/ifwhile.cs	/^#define WriteLong(/;"	d	file:
+WriteLong	samples/qsort.cs	/^#define WriteLong(/;"	d	file:
+_CSUBCFG_H_	cfg.h	/^#define _CSUBCFG_H_$/;"	d
+_CSubCodeGen_H_	csg.h	/^#define _CSubCodeGen_H_$/;"	d
+_CSubScan_H_	css.h	/^#define _CSubScan_H_$/;"	d
+_leaderList	cfg.c	/^typedef struct _leaderList {$/;"	s	file:
+_leaderList	cfg.c	/^} _leaderList;$/;"	t	typeref:struct:_leaderList	file:
+args	csp.c	/^            A_expList args;$/;"	m	struct:A_exp_::__anon8::__anon9	file:
+array	csp.c	/^        } array;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon16	file:
+assign	csp.c	/^        } assign;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon12	file:
+base	csg.c	/^  CSGType base;  \/\/ base type (array element type)$/;"	m	struct:CSGTypeDesc	file:
+base	csg.h	/^  CSGType base;  \/\/ base type (array element type)$/;"	m	struct:CSGTypeDesc
+body	csp.c	/^            A_expList body; $/;"	m	struct:A_exp_::__anon8::__anon14	file:
+branch	cfg.h	/^  Block fail, branch; \/\/ jump targets$/;"	m	struct:BlockDesc
+call	csp.c	/^        } call;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon9	file:
+ch	css.c	/^static int ch;$/;"	v	file:
+class	csg.c	/^  signed char class;  \/\/ Var, Const, Field, Type, Proc, SProc, Inst$/;"	m	struct:CSGNodeDesc	file:
+code	csg.c	/^static CSGNode code, entrypc, FP, GP;$/;"	v	file:
+create_ps	csp.c	/^#define create_ps(/;"	d	file:
+create_ps	csp.c	/^#undef create_ps$/;"	d	file:
+do_find_leader_id	cfg.c	/^_leaderList *do_find_leader_id(int id){$/;"	f
+do_insert_leader_id	cfg.c	/^void do_insert_leader_id(int line){$/;"	f
+dsc	csg.c	/^  CSGNode dsc;  \/\/ Proc: link to procedure scope (head)$/;"	m	struct:CSGNodeDesc	file:
+dsc	csg.h	/^  CSGNode dsc;  \/\/ Proc: link to procedure scope (head)$/;"	m	struct:CSGNodeDesc
+elsee	csp.c	/^            A_expList then, elsee; $/;"	m	struct:A_exp_::__anon8::__anon13	file:
+entrypc	csg.c	/^static CSGNode code, entrypc, FP, GP;$/;"	v	file:
+exp	csp.c	/^            A_exp exp; $/;"	m	struct:A_exp_::__anon8::__anon12	file:
+exp	csp.c	/^            A_exp exp;$/;"	m	struct:A_exp_::__anon8::__anon15	file:
+exp	csp.c	/^            A_exp exp;$/;"	m	struct:A_exp_::__anon8::__anon16	file:
+exp	csp.c	/^    A_exp exp;$/;"	m	struct:A_expList_	file:
+f	css.c	/^static FILE *f;$/;"	v	file:
+fail	cfg.h	/^  Block fail, branch; \/\/ jump targets$/;"	m	struct:BlockDesc
+false	csg.c	/^  CSGNode true, false;  \/\/ Jmp: true and false chains;  Proc: entry point;$/;"	m	struct:CSGNodeDesc	file:
+false	csg.h	/^  CSGNode true, false;  \/\/ Jmp: true and false chains;  Proc: entry point;$/;"	m	struct:CSGNodeDesc
+fields	csg.c	/^  CSGNode fields;  \/\/ linked list of the fields in a struct$/;"	m	struct:CSGTypeDesc	file:
+fields	csg.h	/^  CSGNode fields;  \/\/ linked list of the fields in a struct$/;"	m	struct:CSGTypeDesc
+first	cfg.h	/^  CSGNode first, last; \/\/ pointer to first and last instruction in basic block$/;"	m	struct:BlockDesc
+form	csg.c	/^  signed char form;  \/\/ integer, array, struct$/;"	m	struct:CSGTypeDesc	file:
+form	csg.h	/^  signed char form;  \/\/ integer, array, struct$/;"	m	struct:CSGTypeDesc
+func	csp.c	/^            S_symbol func;$/;"	m	struct:A_exp_::__anon8::__anon9	file:
+genCFG	cfg.c	/^void genCFG(void)$/;"	f
+globscope	csp.c	/^static CSGNode globscope;$/;"	v	file:
+iadd	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iadd	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+iblbc	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iblbc	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+iblbs	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iblbs	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+ibr	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+ibr	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+icall	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+icall	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+icmpeq	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+icmpeq	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+icmple	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+icmple	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+icmplt	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+icmplt	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+id	cfg.c	/^    int id;$/;"	m	struct:_leaderList	file:
+idiv	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+idiv	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+iend	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iend	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+ienter	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+ienter	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+iff	csp.c	/^        } iff; \/* elsee is optional *\/ $/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon13	file:
+ileave	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+ileave	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+iload	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iload	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+imod	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+imod	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+imove	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+imove	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+imul	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+imul	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+ineg	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+ineg	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+inop	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+inop	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+instruct	csp.c	/^static int instruct;$/;"	v	file:
+intt	csp.c	/^        int intt;$/;"	m	union:A_exp_::__anon8	file:
+iparam	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iparam	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+iread	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iread	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+iret	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iret	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+istore	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+istore	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+isub	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+isub	csg.h	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,$/;"	e	enum:__anon5
+iwrite	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iwrite	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+iwrl	csg.c	/^enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon3	file:
+iwrl	csg.h	/^      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};$/;"	e	enum:__anon5
+kind	csp.c	/^    } kind;$/;"	m	struct:A_exp_	typeref:enum:A_exp_::__anon7	file:
+last	cfg.h	/^  CSGNode first, last; \/\/ pointer to first and last instruction in basic block$/;"	m	struct:BlockDesc
+leaders	cfg.c	/^_leaderList *leaders = NULL;$/;"	v
+left	csp.c	/^            A_exp left; $/;"	m	struct:A_exp_::__anon8::__anon10	file:
+left	csp.c	/^            A_exp left;$/;"	m	struct:A_exp_::__anon8::__anon11	file:
+len	csg.c	/^  int len;  \/\/ number of array elements$/;"	m	struct:CSGTypeDesc	file:
+len	csg.h	/^  int len;  \/\/ number of array elements$/;"	m	struct:CSGTypeDesc
+lev	csg.c	/^  signed char lev;  \/\/ 0 = global, 1 = local$/;"	m	struct:CSGNodeDesc	file:
+lev	csg.h	/^  signed char lev;  \/\/ 0 = global, 1 = local$/;"	m	struct:CSGNodeDesc
+line	csg.c	/^  int line;  \/\/ line number for printing purposes$/;"	m	struct:CSGNodeDesc	file:
+line	csg.h	/^  int line;  \/\/ line number for printing purposes$/;"	m	struct:CSGNodeDesc
+line	css.c	/^static int line;$/;"	v	file:
+long	samples/collatz.cs	/^#define long /;"	d	file:
+long	samples/gcd.cs	/^#define long /;"	d	file:
+long	samples/ifwhile.cs	/^#define long /;"	d	file:
+long	samples/qsort.cs	/^#define long /;"	d	file:
+main	csp.c	/^int main(int argc, char *argv[])$/;"	f
+main	samples/collatz.cs	/^void main()$/;"	m
+main	samples/gcd.cs	/^void main()$/;"	m
+main	samples/ifwhile.cs	/^void main()$/;"	m
+main	samples/qsort.cs	/^void main()$/;"	m
+name	csg.c	/^  CSSIdent name;  \/\/ name$/;"	m	struct:CSGNodeDesc	file:
+name	csg.h	/^  CSSIdent name;  \/\/ name$/;"	m	struct:CSGNodeDesc
+next	cfg.c	/^    struct _leaderList *next;$/;"	m	struct:_leaderList	typeref:struct:_leaderList::_leaderList	file:
+next	csg.c	/^  CSGNode next;  \/\/ linked list of all objects in same scope$/;"	m	struct:CSGNodeDesc	file:
+next	csg.h	/^  CSGNode next;  \/\/ linked list of all objects in same scope$/;"	m	struct:CSGNodeDesc
+next	csp.c	/^    A_expList next;$/;"	m	struct:A_expList_	file:
+nxt	csg.c	/^  CSGNode prv, nxt;  \/\/ previous and next instruction$/;"	m	struct:CSGNodeDesc	file:
+nxt	csg.h	/^  CSGNode prv, nxt;  \/\/ previous and next instruction$/;"	m	struct:CSGNodeDesc
+op	csg.c	/^  char op;  \/\/ operation of instruction$/;"	m	struct:CSGNodeDesc	file:
+op	csg.h	/^  char op;  \/\/ operation of instruction$/;"	m	struct:CSGNodeDesc
+op	csp.c	/^        } op;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon10	file:
+op1	csp.c	/^        } op1;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon11	file:
+oper	csp.c	/^            A_oper oper; $/;"	m	struct:A_exp_::__anon8::__anon10	file:
+oper	csp.c	/^            A_oper oper;$/;"	m	struct:A_exp_::__anon8::__anon11	file:
+pos	csp.c	/^    A_pos pos;$/;"	m	struct:A_exp_	file:
+print_space	csp.c	/^void print_space(int times){$/;"	f
+print_tree	csp.c	/^void print_tree(int level, A_exp root){$/;"	f
+prv	csg.c	/^  CSGNode prv, nxt;  \/\/ previous and next instruction$/;"	m	struct:CSGNodeDesc	file:
+prv	csg.h	/^  CSGNode prv, nxt;  \/\/ previous and next instruction$/;"	m	struct:CSGNodeDesc
+right	csp.c	/^            A_exp right;$/;"	m	struct:A_exp_::__anon8::__anon10	file:
+root	csp.c	/^A_exp root;$/;"	v
+size	csg.c	/^  int size;  \/\/ total size of the type$/;"	m	struct:CSGTypeDesc	file:
+size	csg.h	/^  int size;  \/\/ total size of the type$/;"	m	struct:CSGTypeDesc
+structt	csp.c	/^        } structt;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon15	file:
+sym	csp.c	/^static int sym;$/;"	v	file:
+test	csp.c	/^            A_exp test;$/;"	m	struct:A_exp_::__anon8::__anon13	file:
+test	csp.c	/^            A_exp test;$/;"	m	struct:A_exp_::__anon8::__anon14	file:
+then	csp.c	/^            A_expList then, elsee; $/;"	m	struct:A_exp_::__anon8::__anon13	file:
+tos	csp.c	/^static int tos;$/;"	v	file:
+true	csg.c	/^  CSGNode true, false;  \/\/ Jmp: true and false chains;  Proc: entry point;$/;"	m	struct:CSGNodeDesc	file:
+true	csg.h	/^  CSGNode true, false;  \/\/ Jmp: true and false chains;  Proc: entry point;$/;"	m	struct:CSGNodeDesc
+type	csg.c	/^  CSGType type;  \/\/ type$/;"	m	struct:CSGNodeDesc	file:
+type	csg.h	/^  CSGType type;  \/\/ type$/;"	m	struct:CSGNodeDesc
+u	csp.c	/^    } u; $/;"	m	struct:A_exp_	typeref:union:A_exp_::__anon8	file:
+val	csg.c	/^  long long val;  \/\/ Const: value;  Var: address;  SProc: number;  Type: size$/;"	m	struct:CSGNodeDesc	file:
+val	csg.h	/^  long long val;  \/\/ Const: value;  Var: address;  SProc: number;  Type: size$/;"	m	struct:CSGNodeDesc
+var	csp.c	/^            A_exp var; $/;"	m	struct:A_exp_::__anon8::__anon12	file:
+var	csp.c	/^            A_exp var;$/;"	m	struct:A_exp_::__anon8::__anon15	file:
+var	csp.c	/^            A_exp var;$/;"	m	struct:A_exp_::__anon8::__anon16	file:
+var	csp.c	/^        A_var var;$/;"	m	union:A_exp_::__anon8	file:
+whilee	csp.c	/^        } whilee;$/;"	m	union:A_exp_::__anon8	typeref:struct:A_exp_::__anon8::__anon14	file:
+x	csg.c	/^  CSGNode x, y;  \/\/ the two operands$/;"	m	struct:CSGNodeDesc	file:
+x	csg.h	/^  CSGNode x, y;  \/\/ the two operands$/;"	m	struct:CSGNodeDesc
+y	csg.c	/^  CSGNode x, y;  \/\/ the two operands$/;"	m	struct:CSGNodeDesc	file:
+y	csg.h	/^  CSGNode x, y;  \/\/ the two operands$/;"	m	struct:CSGNodeDesc
