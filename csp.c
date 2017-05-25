@@ -936,19 +936,11 @@ static A_exp ProcedureDeclaration(void)
   return A_call(0, proc->name, tmp);
 }
 
-
-void print_space(int times){
-    printf("%02d", times);
-    for(int i = 0; i < times; i++) printf(" ");
-}
-void print_tree(int level, A_exp root){
+void gen_ic(int level, A_exp root){
     if(!root) return;
-    print_space(level * 5);
     switch(root->kind){
         case A_callExp:
-            printf("%s\n", root->u.call.func);
-            for(A_expList it = root->u.call.args; it; it = it->next){
-                print_tree(level + 1, it->exp);
+            for(A_expList it = root->u.call.args,int i = 1; it; it = it->next, i++){
             }
             break;
         case A_intExp:
@@ -958,7 +950,7 @@ void print_tree(int level, A_exp root){
             printf("%s\n", root->u.var);
             break;
         case A_opExp:
-        case A_op1Exp:
+        case A_op1Exp: // we don't really need this one.
             switch(root->u.op.oper){
                 case CSStimes:
                     printf("*\n");
@@ -1067,7 +1059,137 @@ void print_tree(int level, A_exp root){
         default:
             printf("what?\n");
     }
+}
+void print_space(int times){
+    printf("%02d", times);
+    for(int i = 0; i < times; i++) printf(" ");
+}
+void print_tree(int level, A_exp root){
+    if(!root) return;
+    print_space(level * 5);
+    switch(root->kind){
+        case A_callExp:
+            printf("%s\n", root->u.call.func);
+            for(A_expList it = root->u.call.args; it; it = it->next){
+                print_tree(level + 1, it->exp);
+            }
+            break;
+        case A_intExp:
+            printf("%d\n", root->u.intt);
+            break;
+        case A_varExp:
+            printf("%s\n", root->u.var);
+            break;
+        case A_opExp:
+        case A_op1Exp: // we don't really need this one.
+            switch(root->u.op.oper){
+                case CSStimes:
+                    printf("*\n");
+                    break;
+                case CSSdiv:
+                    printf("/\n");
+                    break;
+                case CSSmod:
+                    printf("%%\n");
+                    break;
+                case CSSplus:
+                    printf("+\n");
+                    break;
 
+                case CSSminus:
+                    printf("-\n");
+                    break;
+                case CSSeql:
+                    printf("=\n");
+                    break;
+                case CSSneq:
+                    printf("!=\n");
+                    break;
+                case CSSlss:
+                    printf("<\n");
+                    break;
+                case CSSleq:
+                    printf("<=\n");
+                    break;
+                case CSSgtr:
+                    printf(">\n");
+                    break;
+                case CSSgeq:
+                    printf(">=\n");
+                    break;
+                case CSSperiod:
+                    printf(".\n");
+                    break;
+                case CSScomma:
+                    printf(",\n");
+                    break;
+                case CSSrparen:
+                    printf(")\n");
+                    break;
+                case CSSrbrak:
+                    printf("]\n");
+                    break;
+                case CSSrbrace:
+                    printf("}\n");
+                    break;
+                case CSSlparen: printf("(\n"); break;
+                case CSSlbrak: printf("[\n"); break;
+                case CSSlbrace: printf("{\n"); break;
+                case CSSident: printf("ident\n"); break;
+                case CSSsemicolon: printf("semicolon\n"); break;
+                case CSSelse: printf("else\n"); break;
+                case CSSif: printf("if\n"); break;
+
+                default:
+                    printf("found :D %d\n", root->u.op.oper);
+            }
+            print_tree(level + 1, root->u.op.left);
+            if(root->kind != A_op1Exp) print_tree(level + 1, root->u.op.right);
+            break;
+        case A_assignExp:
+            printf("=\n");
+            print_tree(level + 1, root->u.assign.var);
+            print_tree(level + 1, root->u.assign.exp);
+            break;
+        case A_ifExp:
+            printf("If\n");
+            print_tree(level + 1, root->u.iff.test);
+            for(A_expList it = root->u.iff.then; it; it = it->next){
+                print_tree(level + 1, it->exp);
+            }
+            if(root->u.iff.elsee) {
+                for(A_expList it = root->u.iff.elsee; it; it = it->next){
+                    print_tree(level + 1, it->exp);
+                }
+            }
+            break;
+        case A_whileExp:
+            printf("while\n");
+            print_tree(level + 1, root->u.whilee.test);
+            for(A_expList it = root->u.whilee.body; it; it = it->next){
+                print_tree(level + 1, it->exp);
+            }
+            break;
+        case A_arrayExp:
+            printf("array\n");
+            print_tree(level + 1, root->u.array.var);
+            print_tree(level + 1, root->u.array.exp);
+            break;
+        case A_structExp:
+            if(root->u.structt.exp){
+                printf(".\n");
+                print_tree(level + 1, root->u.structt.var);
+                print_tree(level + 1, root->u.structt.exp);
+            } else {
+                
+                /* fixed bug it's shouldn't enter here */
+                assert(1 == 2);
+                printf("struct_%s\n", root->u.structt.var->u.var);
+            }
+            break;
+        default:
+            printf("what?\n");
+    }
 }
 static void Program(void)
 {
