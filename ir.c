@@ -8,10 +8,11 @@
 
 void do_gen_ir(A_expList expList) {
     A_exp exp;
-    for(A_expList it = expList; it; it->next){
+    for(A_expList it = expList; it; it = it->next){
         exp = it->exp;
         assert(exp->kind == A_callExp);
         // gen_ic(it->exp);
+        printf("%s\n", exp->u.call.func);
         if (strcmp(exp->u.call.func, "main") == 0){
 
         } else {
@@ -39,7 +40,6 @@ IRExpression* create_irexpression(IROp irop, union IRVar e1, enum IRVarType e1_t
     ire->e2 = e2;
 }
 
-
 void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next) {
     IRCode *tmp = create_ircode(iri, u, e1, next);
     _push_ircode(ircodes, tmp);
@@ -56,3 +56,24 @@ void _push_ircode(IRCode **ircodes, IRCode *ircode) {
     }
 }
 
+IRFunction* create_function(char *name, IRCode *irc) {
+    IRFunction *irf = malloc(sizeof(IRFunction));
+    strncpy(irf->name, name, MAX_VAR_LENGTH);
+    irf->irc = irc;
+}
+
+void push_function(IRFunctions **irfs, IRFunction *irf) {
+    if(!irfs) return;
+    if(!*irfs) {
+        *irfs = malloc(sizeof(IRFunctions));
+        (*irfs)->irf = irf;
+        (*irfs)->next = NULL;
+    } else {
+        IRFunctions *it = *irfs;
+        while(it->next) it = it->next;
+        it->next = malloc(sizeof(IRFunctions));
+        it = it->next;
+        it->irf = irf;
+        it->next = NULL;
+    }
+}

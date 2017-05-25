@@ -13,6 +13,12 @@ enum IRVarType {
     var, cons, label
 };
 
+/*
+enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,
+      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop, ige, igeq, 
+      icmpge, icmpgt, iminus};
+*/
+
 typedef char IROp;
 
 union IRVar {
@@ -30,7 +36,6 @@ struct IRExpression {
 };
 typedef struct IRExpression IRExpression;
 
-
 struct IRCode {
     enum IRInstruction iri;
     union IRVar u;
@@ -39,11 +44,25 @@ struct IRCode {
 };
 typedef struct IRCode IRCode;
 
+struct IRFunction {
+    char name[MAX_VAR_LENGTH];
+    IRCode *irc;
+};
+typedef struct IRFunction IRFunction;
+
+struct IRFunctions {
+    IRFunction* irf;
+    struct IRFunctions* next;
+};
+typedef struct IRFunctions IRFunctions;
+
 extern IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next);
 extern void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next) ;
 extern IRExpression* create_irexpression(IROp irop, union IRVar e1, enum IRVarType e1_type, 
                                                    union IRVar e2, enum IRVarType e2_type);
-extern void do_gen_ir(A_expList expList);
+extern IRFunction* create_function(char *name, IRCode *irc);
+extern void push_function(IRFunctions **irfs, IRFunction *irf);
+extern IRFunctions* do_gen_ir(A_expList expList);
 
 void _push_ircode(IRCode **, IRCode*);
 

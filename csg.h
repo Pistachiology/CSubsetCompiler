@@ -39,8 +39,6 @@ typedef struct CSGNodeDesc {
   CSGNode true, false;  // Jmp: true and false chains;  Proc: entry point;
 } CSGNodeDesc;
 
-
-
 extern CSGType CSGlongType, CSGboolType;
 extern char CSGcurlev;
 extern CSGNode CSGpc;

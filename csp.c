@@ -10,6 +10,7 @@
 #include "csg.h"
 #include "cfg.h"
 #include "ast.h"
+#include "ir.h"
 
 static int sym;
 static int instruct;
@@ -893,6 +894,7 @@ int main(int argc, char *argv[])
   }
   // use new one :D
 
+  do_gen_ir(exps);
 
   // blocks = genCFG();
   // print_CFG(blocks);
