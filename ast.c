@@ -8,132 +8,126 @@
 
 A_exp root;
 
-// void gen_ic(A_exp root){
-//     if(!root) return;
-//     switch(root->kind){
-//         case A_callExp:
-            
-//             for(A_expList it = root->u.call.args; it; it = it->next){
+void do_gen_ic(A_expList expList) {
+    CSGOpen();
+    gen_ic(root);
+}
 
-//             }
-//             break;
-//         case A_intExp:
-//             printf("%d\n", root->u.intt);
-//             break;
-//         case A_varExp:
-//             printf("%s\n", root->u.var);
-//             break;
-//         case A_opExp:
-//         case A_op1Exp: // we don't really need this one.
-//             switch(root->u.op.oper){
-//                 case CSStimes:
-//                     printf("*\n");
-//                     break;
-//                 case CSSdiv:
-//                     printf("/\n");
-//                     break;
-//                 case CSSmod:
-//                     printf("%%\n");
-//                     break;
-//                 case CSSplus:
-//                     printf("+\n");
-//                     break;
+void gen_ic(A_exp root){
+    if(!root) return;
+    switch(root->kind){
+        case A_callExp:
+            for(A_expList it = root->u.call.args; it; it = it->next){
+                gen_ic(it->exp);
+            }
 
-//                 case CSSminus:
-//                     printf("-\n");
-//                     break;
-//                 case CSSeql:
-//                     printf("=\n");
-//                     break;
-//                 case CSSneq:
-//                     printf("!=\n");
-//                     break;
-//                 case CSSlss:
-//                     printf("<\n");
-//                     break;
-//                 case CSSleq:
-//                     printf("<=\n");
-//                     break;
-//                 case CSSgtr:
-//                     printf(">\n");
-//                     break;
-//                 case CSSgeq:
-//                     printf(">=\n");
-//                     break;
-//                 case CSSperiod:
-//                     printf(".\n");
-//                     break;
-//                 case CSScomma:
-//                     printf(",\n");
-//                     break;
-//                 case CSSrparen:
-//                     printf(")\n");
-//                     break;
-//                 case CSSrbrak:
-//                     printf("]\n");
-//                     break;
-//                 case CSSrbrace:
-//                     printf("}\n");
-//                     break;
-//                 case CSSlparen: printf("(\n"); break;
-//                 case CSSlbrak: printf("[\n"); break;
-//                 case CSSlbrace: printf("{\n"); break;
-//                 case CSSident: printf("ident\n"); break;
-//                 case CSSsemicolon: printf("semicolon\n"); break;
-//                 case CSSelse: printf("else\n"); break;
-//                 case CSSif: printf("if\n"); break;
+            break;
+        case A_intExp:
+            printf("%d\n", root->u.intt);
+            break;
+        case A_varExp:
+            printf("%s\n", root->u.var);
+            break;
+        case A_opExp:
+        case A_op1Exp: // we don't really need this one.
+            switch(root->u.op.oper){
+                case CSStimes:
+                    printf("*\n");
+                    break;
+                case CSSdiv:
+                    printf("/\n");
+                    break;
+                case CSSmod:
+                    printf("%%\n");
+                    break;
+                case CSSplus:
+                    printf("+\n");
+                    break;
 
-//                 default:
-//                     printf("found :D %d\n", root->u.op.oper);
-//             }
-//             gen_ic(level + 1, root->u.op.left);
-//             if(root->kind != A_op1Exp) gen_ic(level + 1, root->u.op.right);
-//             break;
-//         case A_assignExp:
-//             printf("=\n");
-//             gen_ic(level + 1, root->u.assign.var);
-//             gen_ic(level + 1, root->u.assign.exp);
-//             break;
-//         case A_ifExp:
-//             printf("If\n");
-//             gen_ic(level + 1, root->u.iff.test);
-//             for(A_expList it = root->u.iff.then; it; it = it->next){
-//                 gen_ic(level + 1, it->exp);
-//             }
-//             if(root->u.iff.elsee) {
-//                 for(A_expList it = root->u.iff.elsee; it; it = it->next){
-//                     gen_ic(level + 1, it->exp);
-//                 }
-//             }
-//             break;
-//         case A_whileExp:
-//             printf("while\n");
-//             gen_ic(level + 1, root->u.whilee.test);
-//             for(A_expList it = root->u.whilee.body; it; it = it->next){
-//                 gen_ic(level + 1, it->exp);
-//             }
-//             break;
-//         case A_arrayExp:
-//             printf("array\n");
-//             gen_ic(level + 1, root->u.array.var);
-//             gen_ic(level + 1, root->u.array.exp);
-//             break;
-//         case A_structExp:
-//             if(root->u.structt.exp){
-//                 printf(".\n");
-//                 gen_ic(level + 1, root->u.structt.var);
-//                 gen_ic(level + 1, root->u.structt.exp);
-//             } else {
+                case CSSminus:
+                    printf("-\n");
+                    break;
+                case CSSeql:
+                    printf("=\n");
+                    break;
+                case CSSneq:
+                    printf("!=\n");
+                    break;
+                case CSSlss:
+                    printf("<\n");
+                    break;
+                case CSSleq:
+                    printf("<=\n");
+                    break;
+                case CSSgtr:
+                    printf(">\n");
+                    break;
+                case CSSgeq:
+                    printf(">=\n");
+                    break;
+                case CSSperiod:
+                    printf(".\n");
+                    break;
+                case CSScomma:
+                    printf(",\n");
+                    break;
+                case CSSrparen:
+                    printf(")\n");
+                    break;
+                case CSSrbrak:
+                    printf("]\n");
+                    break;
+                case CSSrbrace:
+                    printf("}\n");
+                    break;
+                case CSSlparen: printf("(\n"); break;
+                case CSSlbrak: printf("[\n"); break;
+                case CSSlbrace: printf("{\n"); break;
+                case CSSident: printf("ident\n"); break;
+                case CSSsemicolon: printf("semicolon\n"); break;
+                case CSSelse: printf("else\n"); break;
+                case CSSif: printf("if\n"); break;
+
+                default:
+                    printf("found :D %d\n", root->u.op.oper);
+            }
+            if(root->kind != A_op1Exp) {
+            }
+            break;
+        case A_assignExp:
+            printf("=\n");
+            break;
+        case A_ifExp:
+            printf("If\n");
+            for(A_expList it = root->u.iff.then; it; it = it->next){
+            }
+            if(root->u.iff.elsee) {
+                for(A_expList it = root->u.iff.elsee; it; it = it->next){
+                }
+            }
+            break;
+        case A_whileExp:
+            printf("while\n");
+            for(A_expList it = root->u.whilee.body; it; it = it->next){
+            }
+            break;
+        case A_arrayExp:
+            printf("array\n");
+            break;
+        case A_structExp:
+            if(root->u.structt.exp){
+                printf(".\n");
+            } else {
                 
-//                 /* fixed bug it's shouldn't enter here */
-//                 assert(1 == 2);
-//                 printf("struct_%s\n", root->u.structt.var->u.var);
-//             }
-//             break;
-//         default:
-//             printf("what?\n");
-//     }
-// }
+                /* fixed bug it's shouldn't enter here */
+                assert(1 == 2);
+                printf("struct_%s\n", root->u.structt.var->u.var);
+            }
+            break;
+        default:
+            printf("what?\n");
+    }
+}
 
 A_exp A_StructExp(A_pos pos, A_exp var, A_exp exp){
     A_exp p = malloc(sizeof(*p));
@@ -219,7 +213,6 @@ void push_AST(A_expList *explist, A_exp exp) {
     } else {
         A_expList it = *explist;
         while(it->next) it = it->next;
-        printf ("fucking push\n");
         it->next = malloc(sizeof(struct A_expList_));
         it = it->next;
         it->exp = exp;
@@ -349,7 +342,6 @@ void print_tree(int level, A_exp root){
                 print_tree(level + 1, root->u.structt.var);
                 print_tree(level + 1, root->u.structt.exp);
             } else {
-                
                 /* fixed bug it's shouldn't enter here */
                 assert(1 == 2);
                 printf("struct_%s\n", root->u.structt.var->u.var);
