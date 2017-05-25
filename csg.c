@@ -45,7 +45,9 @@ CSGType CSGlongType, CSGboolType;
 char CSGcurlev;
 CSGNode CSGpc;
 
-enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove, icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop};
+enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,
+      icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop, ige, igeq, 
+      icmpge, icmpgt, iminus};
 
 static CSGNode entrypc, FP, GP;
 CSGNode code;

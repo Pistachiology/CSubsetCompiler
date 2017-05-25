@@ -83,7 +83,5 @@ extern A_exp A_WhileExp(A_pos pos, A_exp test, A_expList body);
 
 extern void print_space(int times);
 extern void print_tree(int level, A_exp root);
-extern void do_gen_ic(A_exp root);
-extern void gen_ic(A_expList root);
 extern void push_AST(A_expList*, A_exp);
 #endif

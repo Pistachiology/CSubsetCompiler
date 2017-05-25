@@ -1,17 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "ast.h"
 #include "cfg.h"
 #include "csg.h"
 
 A_exp root;
-
-void do_gen_ic(A_expList expList) {
-    CSGOpen();
-    gen_ic(root);
-}
 
 void gen_ic(A_exp root){
     if(!root) return;

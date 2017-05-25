@@ -892,8 +892,6 @@ int main(int argc, char *argv[])
       print_tree(0, it->exp);
   }
   // use new one :D
-  CSGInit();
-  do_gen_ic(root);
 
 
   // blocks = genCFG();
