@@ -5,18 +5,18 @@
 #include <string.h>
 #include <assert.h>
 
+#include "csp.h"
 #include "css.h"
 #include "csg.h"
 #include "cfg.h"
 #include "ast.h"
-
 
 static int sym;
 static int instruct;
 static int tos;
 static CSGNode globscope;
 CSGNode my_code;
-
+A_expList exps;
 
 
 static CSGNode FindObj(CSGNode *root, CSSIdent *id)
@@ -815,7 +815,7 @@ static void Program(void)
   if (sym != CSSvoid) CSSError("procedure expected");
   while (sym == CSSvoid) {
     root = ProcedureDeclaration();
-    print_tree(0, root);
+    push_AST(&exps, root);
   }
   if (sym != CSSeof) CSSError("unrecognized characters at end of file");
 }
@@ -883,8 +883,21 @@ int main(int argc, char *argv[])
     Compile("test.c");
   }
   //CSGDecode();
-  blocks = genCFG();
-  print_CFG(blocks);
+  
+  // keep backup for old code
+  CSGNode old_code = code;
+  
+  // test print the tree :D
+  for(A_expList it = exps; it; it = it->next){
+      print_tree(0, it->exp);
+  }
+  // use new one :D
+  // CSGInit();
+  // gen_ic(root);
+
+
+  // blocks = genCFG();
+  // print_CFG(blocks);
 
   return 0;
 }
