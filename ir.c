@@ -25,18 +25,37 @@ IRFunctions* do_gen_ir(A_expList expList) {
     }
 }
 
+IRExpression* _do_parse_ire(A_exp exp, int regs, int is_store) {
+    IRExpression* ire = NULL;
+    assert(exp != NULL);
+    switch (exp->kind) {
+        case A_varExp:
+            create_irexpression(IROp.var);
+        break;
+        case A_intExp:
+        break;
+    }
+    assert(ire != NULL);
+
+}
+
 IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
     IRCode *irc = NULL;
     switch (exp->kind) {
         case A_varExp:
-        break;
         case A_intExp:
-        break;
+            assert(1 == 2);
         case A_callExp:
-        break;
+            break;
         case A_opExp:
             _push_ircode(&irc, _do_parse_A_exp(exp->u.op.left, regs + 1, 1) );
             _push_ircode(&irc, _do_parse_A_exp(exp->u.op.right, regs + 2, 1) );
+            push_ircode(&irc, IRInstruction.assign, (char)regs, 
+            create_irexpression(
+                exp->u.op.oper, 
+                (char)(regs + 1), IRVarType.regs,
+                (char)(regs + 2), IRVarType.regs
+            ), NULL);
         break;
         case A_assignExp:
         break;
@@ -51,10 +70,9 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
         case A_structExp:
         break;
     }
-
 }
 
-IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next) {
+IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next) {
     IRCode *irc = malloc(sizeof(IRCode));
     irc->iri = iri;
     irc->u = u;
@@ -73,7 +91,7 @@ IRExpression* create_irexpression(IROp irop, union IRVar e1, enum IRVarType e1_t
     ire->e2 = e2;
 }
 
-void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next) {
+void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next) {
     IRCode *tmp = create_ircode(iri, u, e1, next);
     _push_ircode(ircodes, tmp);
 }

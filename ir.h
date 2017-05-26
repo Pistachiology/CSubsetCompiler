@@ -41,7 +41,7 @@ typedef struct IRExpression IRExpression;
 struct IRCode {
     enum IRInstruction iri;
     union IRVar u;
-    IRExpression e1;
+    IRExpression* e1;
     struct IRCode *next;
 };
 typedef struct IRCode IRCode;
@@ -58,8 +58,8 @@ struct IRFunctions {
 };
 typedef struct IRFunctions IRFunctions;
 
-extern IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next);
-extern void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next) ;
+extern IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next);
+extern void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next) ;
 extern IRExpression* create_irexpression(IROp irop, union IRVar e1, enum IRVarType e1_type, 
                                                    union IRVar e2, enum IRVarType e2_type);
 extern IRFunction* create_function(char *name, IRCode *irc);

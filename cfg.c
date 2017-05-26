@@ -67,6 +67,7 @@ Block do_create_block(CSGNode first, int block_id) {
     block->first = first;
     block->last = NULL;
     block->block_id = block_id;
+    return block;
 }
 
 Block find_block_by_leader_id(Block *blocks, int block_cnt, int id) {
@@ -118,7 +119,6 @@ void print_CFG(Block* blocks) {
                     printf("neg");
                     PrintNode(it->x);
                     break;
-
                 case iparam:
                     printf("param");
                     PrintNode(it->x);
@@ -135,7 +135,6 @@ void print_CFG(Block* blocks) {
                 case iend:
                     printf("end");
                     break;
-
                 case icall:
                     printf("call");
                     PrintNode(it->x);
@@ -144,7 +143,6 @@ void print_CFG(Block* blocks) {
                     printf("br");
                     PrintBrakNode(it->x);
                     break;
-
                 case iblbc:
                     printf("blbc");
                     PrintNode(it->x);
