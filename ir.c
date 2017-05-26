@@ -5,20 +5,53 @@
 #include <assert.h>
 
 #include "ir.h"
+IRFunction irfuncs;
 
-void do_gen_ir(A_expList expList) {
-    A_exp exp;
+IRFunctions* do_gen_ir(A_expList expList) {
+    A_exp exp, exp2;
+    IRFunctions* irfuncs = NULL;
+    IRFunction* irf = NULL;
+    IRCode *irc;
     for(A_expList it = expList; it; it = it->next){
         exp = it->exp;
         assert(exp->kind == A_callExp);
-        // gen_ic(it->exp);
-        printf("%s\n", exp->u.call.func);
-        if (strcmp(exp->u.call.func, "main") == 0){
-
-        } else {
-
+        irc = NULL;
+        for(A_expList it2 = exp->u.call.args; it; it = it->next) {
+            exp2 = it2->exp;
+            _push_ircode(&irc, _do_parse_A_exp(exp2, 1, 0));
         }
+        irf = create_function(exp->u.call.func, irc);
+        push_function(&irfuncs, irf);
     }
+}
+
+IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
+    IRCode *irc = NULL;
+    switch (exp->kind) {
+        case A_varExp:
+        break;
+        case A_intExp:
+        break;
+        case A_callExp:
+        break;
+        case A_opExp:
+            _push_ircode(&irc, _do_parse_A_exp(exp->u.op.left, regs + 1, 1) );
+            _push_ircode(&irc, _do_parse_A_exp(exp->u.op.right, regs + 2, 1) );
+        break;
+        case A_assignExp:
+        break;
+        case A_ifExp:
+        break;
+        case A_whileExp:
+        break;
+        case A_arrayExp:
+        break;
+        case A_op1Exp:
+        break;
+        case A_structExp:
+        break;
+    }
+
 }
 
 IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression e1, IRCode *next) {

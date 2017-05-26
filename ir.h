@@ -10,7 +10,7 @@ enum IRInstruction {
 };
 
 enum IRVarType {
-    var, cons, label
+    var, cons, label, regs, expr
 };
 
 /*
@@ -23,8 +23,10 @@ typedef char IROp;
 
 union IRVar {
     long cons;
+    char regs;
     char name[MAX_VAR_LENGTH];
     char label[MAX_VAR_LENGTH];
+    struct IRExpression *ire;
 } ;
 
 struct IRExpression {
@@ -64,6 +66,8 @@ extern IRFunction* create_function(char *name, IRCode *irc);
 extern void push_function(IRFunctions **irfs, IRFunction *irf);
 extern IRFunctions* do_gen_ir(A_expList expList);
 
+
+IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store);
 void _push_ircode(IRCode **, IRCode*);
 
 #endif
