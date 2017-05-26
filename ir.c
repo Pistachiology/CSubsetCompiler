@@ -306,12 +306,20 @@ void do_print_ircode(IRCode *ircodes) {
                 do_print_irvar(it->u, it->utype);
                 break;
             case ircall:
+            {
+                int push_count = 0;
+                for(union IRVar *ir_it = it->u.args.next; ir_it; ir_it = ir_it->args.next) {
+                    printf("push $t%d\n", ir_it->args.u.regs);
+                    push_count++;
+                }
                 printf("call %s(", it->u.args.u.name);
                 for(union IRVar *ir_it = it->u.args.next; ir_it; ir_it = ir_it->args.next) {
                     printf("$t%d", ir_it->args.u.regs);
                     if(ir_it->args.next) printf(", ");
                 }
-                printf(")");
+                printf(")\n");
+                printf("$sp = $sp - %d", push_count * 4);
+            }
                 break;
             case irarray_access:
             {
@@ -414,12 +422,10 @@ void do_print_irexpression(IRExpression* ire) {
         break;
         case CSSarray:
             {
-
-            /* old version
             do_print_irvar(ire->e1, ire->e1_type);
             printf("[");
             do_print_irvar(ire->e2, ire->e2_type);
-            printf("]"); */
+            printf("]"); 
             }
         break;
         default:

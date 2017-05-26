@@ -10,7 +10,7 @@ enum IRInstruction {
 };
 
 enum IRVarType {
-    irvar, ircons, irlabel, irregs, irexpr, irnone, ircall_args
+    irvar, ircons, irlabel, irregs, irexpr, irnone, ircall_args, irarray
 };
 
 /*
