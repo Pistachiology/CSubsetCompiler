@@ -9,7 +9,7 @@
 typedef enum {CSStimes, CSSdiv, CSSmod, CSSplus, CSSminus, CSSeql, CSSneq, CSSlss, CSSleq, CSSgtr,
       CSSgeq, CSSperiod, CSScomma, CSSrparen, CSSrbrak, CSSrbrace, CSSlparen, CSSlbrak, CSSlbrace,
       CSSbecomes, CSSnumber, CSSident, CSSsemicolon, CSSelse, CSSif, CSSwhile, CSSstruct,
-      CSSconst, CSSvoid, CSSeof} A_oper;
+      CSSconst, CSSvoid, CSSeof, CSSvar, CSSarray} A_oper;
 
 #define CSSidlen 16
 typedef char CSSIdent[CSSidlen];

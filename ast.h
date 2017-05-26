@@ -13,7 +13,7 @@ typedef char* S_symbol;
 typedef char* A_var;
 enum AST_operator { 
     AST_add, AST_minus, AST_mult, AST_mod, AST_eq, AST_neq, AST_gt, AST_ge, 
-    AST_lt, AST_le
+    AST_lt, AST_le, AST_var, AST_none
 };
 typedef unsigned int A_pos; 
 extern A_exp root;
