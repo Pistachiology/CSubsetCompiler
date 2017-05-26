@@ -9,7 +9,7 @@ enum {CSGVar, CSGConst, CSGFld, CSGTyp, CSGProc, CSGSProc, CSGAddr, CSGInst};
 
 enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,
       icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop, ige, igeq, 
-      icmpge, icmpgt, iminus};
+      icmpge, icmpgt, iminus, ivar};
 /* form */
 enum {CSGInteger, CSGBoolean, CSGArray, CSGStruct};
 

@@ -5,12 +5,12 @@
 #define MAX_VAR_LENGTH 256
 
 enum IRInstruction {
-    fjmp, tjmp, jmp, assign, array_assign, cjmp, array_access,
-    field_access, addr_ins, copy, load, store
+    irfjmp, irtjmp, irjmp, irassign, irarray_assign, ircjmp, irarray_access,
+    irfield_access, iraddr_ins, ircopy, irload, irstore, 
 };
 
 enum IRVarType {
-    var, cons, label, regs, expr
+    irvar, ircons, irlabel, irregs, irexpr, irnone
 };
 
 /*

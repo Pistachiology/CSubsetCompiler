@@ -30,7 +30,6 @@ IRExpression* _do_parse_ire(A_exp exp, int regs, int is_store) {
     assert(exp != NULL);
     switch (exp->kind) {
         case A_varExp:
-            create_irexpression(IROp.var);
         break;
         case A_intExp:
         break;
@@ -41,6 +40,7 @@ IRExpression* _do_parse_ire(A_exp exp, int regs, int is_store) {
 
 IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
     IRCode *irc = NULL;
+    union IRVar tmp_irvar[3];
     switch (exp->kind) {
         case A_varExp:
         case A_intExp:
@@ -50,14 +50,29 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
         case A_opExp:
             _push_ircode(&irc, _do_parse_A_exp(exp->u.op.left, regs + 1, 1) );
             _push_ircode(&irc, _do_parse_A_exp(exp->u.op.right, regs + 2, 1) );
-            push_ircode(&irc, IRInstruction.assign, (char)regs, 
-            create_irexpression(
-                exp->u.op.oper, 
-                (char)(regs + 1), IRVarType.regs,
-                (char)(regs + 2), IRVarType.regs
-            ), NULL);
+            tmp_irvar[0].regs = (regs);
+            tmp_irvar[1].regs = (regs + 1);
+            tmp_irvar[2].regs = (regs + 2);
+            push_ircode(&irc, irassign, tmp_irvar[0], 
+                create_irexpression(
+                    exp->u.op.oper, 
+                    tmp_irvar[1], irregs,
+                    tmp_irvar[2], irregs
+                ), NULL);
         break;
         case A_assignExp:
+            assert(exp->u.assign.var->kind == A_varExp || exp->u.assign.var->kind == A_intExp);
+            _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs + 1, 1));
+            tmp_irvar[0].regs = (exp->u.assign.var->kind == A_varExp?irvar:ircons);
+            tmp_irvar[1].regs = (regs + 1);
+            tmp_irvar[2].regs = (0);
+            push_ircode(&irc, irassign, tmp_irvar[0], 
+                create_irexpression(
+                    ivar, 
+                    tmp_irvar[1], irregs,
+                    tmp_irvar[2], irnone
+                ), NULL);
+
         break;
         case A_ifExp:
         break;
