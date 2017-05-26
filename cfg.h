@@ -6,6 +6,7 @@
 
 
 typedef struct BlockDesc *Block; 
+typedef struct livenessVariable *liveVar;
 
 typedef struct BlockDesc {
   Block fail, branch; // jump targets
@@ -13,8 +14,15 @@ typedef struct BlockDesc {
   int block_id;
 } BlockDesc;
 
+typedef struct livenessVariable{
+    struct livenessVariable *next;
+    CSSIdent var;
+} livenessVariable;
+
 extern Block block;
 extern int leaders_count;
 extern Block* genCFG(void);
 extern void print_CFG(Block*);
+extern liveVar analyze_liveness(Block);
+
 #endif

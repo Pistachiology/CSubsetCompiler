@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "csg.h"
  
@@ -67,15 +68,113 @@ Block do_create_block(CSGNode first, int block_id) {
     block->first = first;
     block->last = NULL;
     block->block_id = block_id;
+    return block;
 }
 
 Block find_block_by_leader_id(Block *blocks, int block_cnt, int id) {
     for(int i = 0; i < block_cnt; i++){
         if(blocks[i]->first->line == id) return blocks[i];
     }
-   return NULL; 
+    return NULL; 
 }
 
+typedef struct livenessVariable{
+    struct livenessVariable *next;
+    CSSIdent var;
+} livenessVariable;
+
+typedef livenessVariable *liveVar;
+
+liveVar create_live_var(){
+    liveVar new_live = malloc(sizeof(struct livenessVariable *));
+    new_live->next = NULL;
+    return new_live;
+}
+
+liveVar union_var(liveVar first_header, liveVar second_header){
+    liveVar temp_header = create_live_var();
+    liveVar cur_temp_header = temp_header->next;
+    liveVar cur_second_header = second_header;
+    while(cur_second_header != NULL){
+        int dup_var = 0;
+        liveVar cur_first_header = first_header;
+        while(cur_first_header != NULL){
+            if(strcmp(cur_second_header->var, cur_first_header->var) == 0){
+                dup_var = 1;
+                break;
+            }
+            cur_first_header = cur_first_header->next;
+        }
+        if(!dup_var){
+            cur_temp_header = create_live_var();
+            strcpy(cur_temp_header->var, cur_second_header->var);
+            cur_temp_header = cur_temp_header->next;
+        }
+        cur_second_header = cur_second_header->next;
+    }
+    liveVar cur_first_header = first_header->next;
+    while(cur_first_header != NULL){
+        cur_temp_header = create_live_var();
+        strcpy(cur_temp_header->var, cur_first_header->var);
+        cur_temp_header = cur_temp_header->next;
+        cur_first_header = cur_first_header->next;
+    }
+    return temp_header->next;
+}
+
+void cut_name(liveVar header, CSSIdent name){
+    liveVar cur_live = header;
+    while(cur_live->next != NULL){
+        if(strcmp(cur_live->next->var, name) == 0){
+            cur_live->next = cur_live->next->next;
+            return ;
+        }
+    }
+}
+
+liveVar analyze_liveness(Block cur_block){
+    printf("World: %d\n", cur_block->block_id);
+    if(cur_block == NULL) return create_live_var();
+    CSGNode it = cur_block->last;
+    printf("%d :: %d %d\n", cur_block->block_id, cur_block->fail->block_id, cur_block->branch->block_id);
+    printf("Hello World\n");
+    liveVar fail_header = analyze_liveness(cur_block->fail);
+    liveVar branch_header = analyze_liveness(cur_block->branch);
+    liveVar header = union_var(fail_header->next, branch_header->next);
+    do{
+        switch(it->op){
+            case iadd:
+            case isub:
+            case imul:
+            case idiv:
+            case imod:
+                if(it->x->class == CSGVar){
+                    liveVar temp_live = create_live_var();
+                    strcpy(temp_live->var, it->x->name);
+                    header = union_var(header->next, temp_live);
+                }
+                if(it->y->class == CSGVar){
+                    liveVar temp_live = create_live_var();
+                    strcpy(temp_live->var, it->y->name);
+                    header = union_var(header->next, temp_live);
+                }
+                break;
+            case imove:
+                cut_name(header, it->y->name);
+                if(it->x->class == CSGVar){
+                    liveVar temp_live = create_live_var();
+                    strcpy(temp_live->var, it->x->name);
+                    header = union_var(header->next, temp_live);
+                }
+                break;
+            default:
+                break;
+        }
+        if(it == cur_block->first) break;
+        it = it->prv;
+    }while(1);
+    return header;
+}
 
 void print_CFG(Block* blocks) {
     CSGNode it;
@@ -324,8 +423,8 @@ Block* genCFG(void)
         printf("block_id: %d firstl: %d lastl: %d branch: %d fail: %d\n", 
             blocks[j]->block_id,
             blocks[j]->first->line, blocks[j]->last->line, 
-            blocks[j]->branch?blocks[j]->branch->first->line:0, 
-            blocks[j]->fail?blocks[j]->fail->first->line:0);
+            blocks[j]->branch?blocks[j]->branch->block_id:0, 
+            blocks[j]->fail?blocks[j]->fail->block_id:0);
     }
     return blocks;
 }

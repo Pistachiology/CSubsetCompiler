@@ -889,14 +889,15 @@ int main(int argc, char *argv[])
   CSGNode old_code = code;
   
   // test print the tree :D
-  for(A_expList it = exps; it; it = it->next){
-      print_tree(0, it->exp);
-  }
+  //for(A_expList it = exps; it; it = it->next){
+  //    print_tree(0, it->exp);
+  //}
   // use new one :D
 
-  do_gen_ir(exps);
+  //do_gen_ir(exps);
 
-  // blocks = genCFG();
+  blocks = genCFG();
+  liveVar header = analyze_liveness(blocks[0]);
   // print_CFG(blocks);
 
   return 0;
