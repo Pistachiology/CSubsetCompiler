@@ -23,6 +23,6 @@ extern Block block;
 extern int leaders_count;
 extern Block* genCFG(void);
 extern void print_CFG(Block*);
-extern liveVar analyze_liveness(Block);
+extern liveVar liveness_manager(Block);
 
 #endif

@@ -29,7 +29,7 @@ typedef livenessVariable *liveVar;
 _leaderList *leaders = NULL;
 
 int leaders_count = 0;
-int is_changed = 0;
+int is_changed = 1;
 int *visited_blocks = NULL;
 
 Block block;
@@ -91,7 +91,7 @@ Block find_block_by_leader_id(Block *blocks, int block_cnt, int id) {
 void print_variables(liveVar header){
     liveVar cur_live = header->next;
     while(cur_live != NULL){
-        printf(" %s", cur_live->var);
+        printf("%s ", cur_live->var);
         cur_live = cur_live->next;
     }
     printf("\n");
@@ -153,7 +153,7 @@ int visit_block(int block_id){
         visited_blocks = malloc(sizeof(int) * leaders_count);
         return 0;
     }
-    if(visited_blocks[block_id] == 1){
+    if(visited_blocks[block_id - 1] == 1){
         return 1;
     }
     return 0;
@@ -165,8 +165,8 @@ liveVar analyze_liveness(Block cur_block){
         return create_live_var();
     }
     CSGNode it = cur_block->last;
-    // printf("%d\n", cur_block->block_id);
-    visited_blocks[cur_block->block_id] = 1;
+    printf("%d\n", cur_block->block_id);
+    visited_blocks[cur_block->block_id - 1] = 1;
     liveVar fail_header = analyze_liveness(cur_block->fail);
     liveVar branch_header = analyze_liveness(cur_block->branch);
     liveVar header = union_var(fail_header->next, branch_header->next);
@@ -202,11 +202,17 @@ liveVar analyze_liveness(Block cur_block){
         if(it == cur_block->first) break;
         it = it->prv;
     }while(1);
-    printf("%d\n", cur_block->block_id);
-    print_variables(header);
     return header;
 }
 
+liveVar liveness_manager(Block cur_block){
+    liveVar header;
+    while(is_changed <= 1){
+        header = analyze_liveness(cur_block);
+        memset(visited_blocks, 0, sizeof(int) * leaders_count);
+        is_changed += 1;
+    }
+}
 
 void print_CFG(Block* blocks) {
     CSGNode it;
