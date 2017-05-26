@@ -4,7 +4,7 @@
 #include <string.h>
 
 #include "ast.h"
-#include "cfg.h"
+#include "new_cfg.h"
 #include "csg.h"
 
 A_exp root;

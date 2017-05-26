@@ -7,7 +7,7 @@
 enum IRInstruction {
     irfjmp, irtjmp, irjmp, irassign, irarray_assign, ircjmp, irarray_access,
     irfield_access, iraddr_ins, ircopy, irload, irstore, irilabel, irinop, ircall,
-    irminus
+    irminus, irret, irend
 };
 
 enum IRVarType {
@@ -50,6 +50,7 @@ struct IRCode {
     union IRVar u;
     enum IRVarType utype;
     IRExpression* e1;
+    int line;
     struct IRCode *next;
 };
 typedef struct IRCode IRCode;
@@ -73,12 +74,16 @@ extern IRExpression* create_irexpression(IROp irop, union IRVar e1, enum IRVarTy
 extern IRFunction* create_function(char *name, IRCode *irc);
 extern void push_function(IRFunctions **irfs, IRFunction *irf);
 extern IRFunctions* do_gen_ir(A_expList expList);
+extern IRCode* do_gen_low_ir(IRFunctions* irfuncs);
 
 
 IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store);
 void _push_ircode(IRCode **, IRCode*);
 void do_print_ircode(IRCode *ircodes);
+void _do_print_ircode(IRCode *it);
 void do_print_irexpression(IRExpression* ire) ;
 void do_print_irvar(union IRVar irvar, enum IRVarType type)  ;
+void cpush_ircode(IRCode **ircodes, IRCode *ircode);
+
 
 #endif

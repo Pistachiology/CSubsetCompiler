@@ -6,7 +6,6 @@
 
 #include "ir.h"
 #include "css.h"
-IRFunction irfuncs;
 int label_gen_count = 0;
 
 IRFunctions* do_gen_ir(A_expList expList) {
@@ -24,11 +23,29 @@ IRFunctions* do_gen_ir(A_expList expList) {
         }
         irf = create_function(exp->u.call.func, irc);
         push_function(&irfuncs, irf);
-        printf("func %s\n", exp->u.call.func);
-        do_print_ircode(irc);
-        printf("\n\n");
+        // printf("FUNCTION %s:\n", exp->u.call.func);
+        // do_print_ircode(irc);
+        // printf("\n\n");
     }
+    return irfuncs;
+}
 
+IRCode* do_gen_low_ir(IRFunctions* irfuncs) {
+    IRCode* ircodes = NULL;
+    int line = 0;
+    for(IRFunctions *it_funcs = irfuncs; it_funcs; it_funcs = it_funcs->next) {
+        union IRVar tmp_irvar;
+        strcpy(tmp_irvar.name, it_funcs->irf->name);
+        push_ircode(&ircodes, irilabel, tmp_irvar, NULL, irlabel, NULL);
+        for(IRCode *it_irc = it_funcs->irf->irc; it_irc; it_irc = it_irc->next) {
+            cpush_ircode(&ircodes, it_irc);
+        }
+        push_ircode(&ircodes, irret, tmp_irvar, NULL, irnone, NULL);
+    }
+    for(IRCode *it_irc = ircodes; it_irc; it_irc = it_irc->next) {
+       it_irc->line = line++; 
+    }
+    return ircodes;
 }
 
 IRExpression* _do_parse_ire(A_exp exp, int regs, int is_store) {
@@ -145,8 +162,8 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                 ), irregs, NULL);
 
                 // store $t0 $t4
-                tmp_irvar[0].regs = regs;
-                tmp_irvar[1].regs = regs + 4;
+                tmp_irvar[0].regs = regs + 4;
+                tmp_irvar[1].regs = regs;
                 push_ircode(&irc, irstore, tmp_irvar[0], create_irexpression(
                     CSSmanual, tmp_irvar[1], irregs, tmp_irvar[2], irnone
                 ), irregs, NULL);
@@ -262,8 +279,8 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                 ), irregs, NULL);
 
                 // load $t0 $t4
-                tmp_irvar[0].regs = regs;
-                tmp_irvar[1].regs = regs + 4;
+                tmp_irvar[0].regs = regs + 4;
+                tmp_irvar[1].regs = regs;
                 push_ircode(&irc, irload, tmp_irvar[0], create_irexpression(
                     CSSmanual, tmp_irvar[1], irregs, tmp_irvar[2], irnone
                 ), irregs, NULL);
@@ -322,6 +339,13 @@ void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpr
     _push_ircode(ircodes, tmp);
 }
 
+void cpush_ircode(IRCode **ircodes, IRCode *ircode){
+    // WARNING: careful e1 not clone ; maybe corrupt in future
+    IRCode *tmp = create_ircode(ircode->iri, ircode->u, ircode->e1, ircode->utype, NULL);
+    _push_ircode(ircodes, tmp);
+
+}
+
 void _push_ircode(IRCode **ircodes, IRCode *ircode) {
     if(!ircodes) return;
     if(!*ircodes) { 
@@ -355,104 +379,113 @@ void push_function(IRFunctions **irfs, IRFunction *irf) {
     }
 }
 
-void do_print_ircode(IRCode *ircodes) {
-    IRCode *it = ircodes;
-    while(it) {
-        switch (it->iri)
+void _do_print_ircode(IRCode *it) {
+    switch (it->iri)
+    {
+    case irassign:
+        do_print_irvar(it->u, it->utype);
+        printf(" = ");
+        do_print_irexpression(it->e1);
+        break;
+    case irfjmp:
+        printf("fjump ");
+        do_print_irexpression(it->e1);
+        printf(" ");
+        do_print_irvar(it->u, it->utype);
+        break;
+    case irjmp:
+        printf("jump ");
+        do_print_irvar(it->u, it->utype);
+        break;
+    case irilabel:
+        printf("label ");
+        do_print_irvar(it->u, it->utype);
+        break;
+    case ircall:
+    {
+        int push_count = 0;
+        for (union IRVar *ir_it = it->u.args.next; ir_it; ir_it = ir_it->args.next)
         {
-            case irassign:
-                do_print_irvar(it->u, it->utype);
-                printf(" = ");
-                do_print_irexpression(it->e1); 
-                break;
-            case irfjmp:
-                printf("fjump ");
-                do_print_irexpression(it->e1);
-                printf(" ");
-                do_print_irvar(it->u, it->utype);
-                break;
-            case irjmp:
-                printf("jump ");
-                do_print_irvar(it->u, it->utype);
-                break;
-            case irilabel:
-                printf("label ");
-                do_print_irvar(it->u, it->utype);
-                break;
-            case ircall:
-            {
-                int push_count = 0;
-                for(union IRVar *ir_it = it->u.args.next; ir_it; ir_it = ir_it->args.next) {
-                    printf("push $t%d\n", ir_it->args.u.regs);
-                    push_count++;
-                }
-                printf("call %s(", it->u.args.u.name);
-                for(union IRVar *ir_it = it->u.args.next; ir_it; ir_it = ir_it->args.next) {
-                    printf("$t%d", ir_it->args.u.regs);
-                    if(ir_it->args.next) printf(", ");
-                }
-                printf(")\n");
-                printf("$sp = $sp - %d", push_count * 4);
-            }
-                break;
-            case irload:
-            {
-                printf("load ");
-                do_print_irvar(it->u, it->utype);
-                printf(" ");
-                do_print_irvar(it->e1->e1, it->e1->e1_type);
-            }
-                break;
-            case irstore:
-            {
-                printf("store ");
-                do_print_irvar(it->u, it->utype);
-                printf(" ");
-                do_print_irvar(it->e1->e1, it->e1->e1_type);
-            }
-            break;
-            case irminus:
-                do_print_irvar(it->u, it->utype);
-                printf(" = -");
-                do_print_irvar(it->e1->e1, it->e1->e1_type);
-            break;
-            case irarray_access:
-            {
-                assert(0);
-                IRExpression *ire = it->e1;
-                int reg_num = ire->e2.regs;
-                printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
-                printf("$t%d = 4 * $t%d\n", reg_num + 2, reg_num);
-                printf("$t%d = $t%d + $t%d\n", reg_num+3, reg_num + 2, reg_num + 1);
-                printf("load ");
-                do_print_irvar(it->u, it->utype);
-                printf(" $t%d", reg_num+3);
-                // printf(" = ");
-                // do_print_irexpression(it->e1);
-            }
-                break;
-            case irarray_assign:
-            {
-                assert(0);
-                IRExpression *ire = it->e1;
-                int reg_num = ire->e2.regs;
-                printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
-                printf("$t%d = 4 * $t%d\n", reg_num + 2, reg_num);
-                printf("$t%d = $t%d + $t%d\n", reg_num+3, reg_num + 2, reg_num + 1);
-                printf("store ");
-                do_print_irvar(it->u, it->utype);
-                printf(" $t%d", reg_num+3);
-                /*
+            printf("push $t%d\n", ir_it->args.u.regs);
+            push_count++;
+        }
+        printf("call %s(", it->u.args.u.name);
+        for (union IRVar *ir_it = it->u.args.next; ir_it; ir_it = ir_it->args.next)
+        {
+            printf("$t%d", ir_it->args.u.regs);
+            if (ir_it->args.next)
+                printf(", ");
+        }
+        printf(")\n");
+        printf("$sp = $sp - %d", push_count * 4);
+    }
+    break;
+    case irload:
+    {
+        printf("load ");
+        do_print_irvar(it->e1->e1, it->e1->e1_type);
+        printf(" ");
+        do_print_irvar(it->u, it->utype);
+    }
+    break;
+    case irstore:
+    {
+        printf("store ");
+        do_print_irvar(it->u, it->utype);
+        printf(" ");
+        do_print_irvar(it->e1->e1, it->e1->e1_type);
+    }
+    break;
+    case irminus:
+        do_print_irvar(it->u, it->utype);
+        printf(" = -");
+        do_print_irvar(it->e1->e1, it->e1->e1_type);
+        break;
+    case irarray_access:
+    {
+        assert(0);
+        IRExpression *ire = it->e1;
+        int reg_num = ire->e2.regs;
+        printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
+        printf("$t%d = 4 * $t%d\n", reg_num + 2, reg_num);
+        printf("$t%d = $t%d + $t%d\n", reg_num + 3, reg_num + 2, reg_num + 1);
+        printf("load ");
+        do_print_irvar(it->u, it->utype);
+        printf(" $t%d", reg_num + 3);
+        // printf(" = ");
+        // do_print_irexpression(it->e1);
+    }
+    break;
+    case irarray_assign:
+    {
+        assert(0);
+        IRExpression *ire = it->e1;
+        int reg_num = ire->e2.regs;
+        printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
+        printf("$t%d = 4 * $t%d\n", reg_num + 2, reg_num);
+        printf("$t%d = $t%d + $t%d\n", reg_num + 3, reg_num + 2, reg_num + 1);
+        printf("store ");
+        do_print_irvar(it->u, it->utype);
+        printf(" $t%d", reg_num + 3);
+        /*
                 do_print_irexpression(it->e1);
                 printf(" = ");
                 do_print_irvar(it->u, it->utype);
                 */
-            }
-                break;
-            default:
-                printf("ir_nop %d", it->iri);
-        }
-        printf("\n");
+    }
+    break;
+    case irret:
+        printf("ret");
+        break;
+    default:
+        printf("ir_nop %d", it->iri);
+    }
+    printf("\n");
+}
+void do_print_ircode(IRCode *ircodes) {
+    IRCode *it = ircodes;
+    while(it) {
+        _do_print_ircode(it);
         it = it->next; 
     }
 }

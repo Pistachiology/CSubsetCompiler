@@ -8,7 +8,7 @@
 #include "csp.h"
 #include "css.h"
 #include "csg.h"
-#include "cfg.h"
+#include "new_cfg.h"
 #include "ast.h"
 #include "ir.h"
 
@@ -876,28 +876,33 @@ static void Compile(char *filename)
 
 int main(int argc, char *argv[])
 {
-  Block* blocks;
+  Block** blocks;
+  IRFunctions *irfuncs;
+  IRCode *ircs;
   CSGInit();
   if (argc >= 2) {
     Compile(argv[1]);
   } else {
     Compile("test.c");
   }
-  CSGDecode();
+  // CSGDecode();
   
   // keep backup for old code
   CSGNode old_code = code;
   
   // test print the tree :D
-  for(A_expList it = exps; it; it = it->next){
-      print_tree(0, it->exp);
-  }
+  // for(A_expList it = exps; it; it = it->next){
+  //     print_tree(0, it->exp);
+  // }
   // use new one :D
 
-  do_gen_ir(exps);
+  irfuncs = do_gen_ir(exps);
+  ircs = do_gen_low_ir(irfuncs);
+  // do_print_ircode(ircs);
 
-  // blocks = genCFG();
-  // print_CFG(blocks);
+
+  blocks = genCFG(ircs);
+  printCFG(blocks);
 
   return 0;
 }

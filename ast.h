@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include "css.h"
 #include "csg.h"
-#include "cfg.h"
 
 typedef struct A_exp_ *A_exp;
 typedef struct A_expList_ *A_expList;
