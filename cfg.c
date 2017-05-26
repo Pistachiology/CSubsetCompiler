@@ -322,8 +322,8 @@ Block* genCFG(void)
         printf("block_id: %d firstl: %d lastl: %d branch: %d fail: %d\n", 
             blocks[j]->block_id,
             blocks[j]->first->line, blocks[j]->last->line, 
-            blocks[j]->branch?blocks[j]->branch->first->line:0, 
-            blocks[j]->fail?blocks[j]->fail->first->line:0);
+            blocks[j]->branch?blocks[j]->branch->block_id:0, 
+            blocks[j]->fail?blocks[j]->fail->block_id:0);
     }
     return blocks;
 }
