@@ -138,7 +138,7 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                 _push_ircode(&irc, _do_parse_A_exp(exp->u.array.exp, regs + 1, 1));
 
 
-                strcpy(tmp_irvar[0].name, exp->u.array.var->u.var);
+                strcpy(tmp_irvar[0].name, array_exp->u.array.var->u.var);
                 tmp_irvar[1].regs = regs + 2;
                 // load $t2 base_var
                 push_ircode(&irc, irload, tmp_irvar[0], create_irexpression(
