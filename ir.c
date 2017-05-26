@@ -118,11 +118,11 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                             irvar, NULL);
             } else {
                 A_exp array_exp = exp->u.assign.var;
-                _push_ircode(&irc, _do_parse_A_exp(array_exp->u.array.exp, regs, 1));
-                _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs + 1, 1));
+                _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs, 1));
+                _push_ircode(&irc, _do_parse_A_exp(array_exp->u.array.exp, regs + 1, 1));
                 strcpy(tmp_irvar[0].name, array_exp->u.array.var->u.var);
-                tmp_irvar[1].regs = (regs);
-                tmp_irvar[2].regs = (regs + 1);
+                tmp_irvar[1].regs = (regs + 1);
+                tmp_irvar[2].regs = (regs);
                 push_ircode(&irc, irarray_assign, tmp_irvar[2],
                             create_irexpression(
                                 CSSarray,
@@ -312,17 +312,37 @@ void do_print_ircode(IRCode *ircodes) {
                     if(ir_it->args.next) printf(", ");
                 }
                 printf(")");
-
                 break;
             case irarray_access:
+            {
+                IRExpression *ire = it->e1;
+                int reg_num = ire->e2.regs;
+                printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
+                printf("$t%d = 4 * $t%d\n", reg_num + 2, reg_num);
+                printf("$t%d = $t%d + $t%d\n", reg_num+3, reg_num + 2, reg_num + 1);
+                printf("load ");
                 do_print_irvar(it->u, it->utype);
-                printf(" = ");
-                do_print_irexpression(it->e1);
+                printf(" $t%d", reg_num+3);
+                // printf(" = ");
+                // do_print_irexpression(it->e1);
+            }
                 break;
             case irarray_assign:
+            {
+                IRExpression *ire = it->e1;
+                int reg_num = ire->e2.regs;
+                printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
+                printf("$t%d = 4 * $t%d\n", reg_num + 2, reg_num);
+                printf("$t%d = $t%d + $t%d\n", reg_num+3, reg_num + 2, reg_num + 1);
+                printf("store ");
+                do_print_irvar(it->u, it->utype);
+                printf(" $t%d", reg_num+3);
+                /*
                 do_print_irexpression(it->e1);
                 printf(" = ");
                 do_print_irvar(it->u, it->utype);
+                */
+            }
                 break;
             default:
                 printf("ir_nop %d", it->iri);
@@ -393,10 +413,14 @@ void do_print_irexpression(IRExpression* ire) {
             do_print_irvar(ire->e2, ire->e2_type);
         break;
         case CSSarray:
+            {
+
+            /* old version
             do_print_irvar(ire->e1, ire->e1_type);
             printf("[");
             do_print_irvar(ire->e2, ire->e2_type);
-            printf("]");
+            printf("]"); */
+            }
         break;
         default:
             printf("working :< %d", ire->irop);
