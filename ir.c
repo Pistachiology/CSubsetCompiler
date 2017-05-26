@@ -26,6 +26,7 @@ IRFunctions* do_gen_ir(A_expList expList) {
         push_function(&irfuncs, irf);
         printf("func %s\n", exp->u.call.func);
         do_print_ircode(irc);
+        printf("\n\n");
     }
 
 }
@@ -99,10 +100,49 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
 
         break;
         case A_ifExp:
+            /* if then */
+            if(!exp->u.iff.elsee) {
+                /* t1 = T[e] ; fjump t1 Lend ; T[s] ; label Lend */
+                _push_ircode(&irc, _do_parse_A_exp(exp->u.iff.test, regs, 1)); // T [e]
+                tmp_irvar[1].regs = regs;
+                sprintf(tmp_irvar[0].label, "Lend%d", label_gen_count);
+                push_ircode(&irc, irfjmp, tmp_irvar[0], create_irexpression(
+                    CSSvar,
+                    tmp_irvar[1], irregs,
+                    tmp_irvar[2], irnone
+                ), irlabel, NULL);
+                for(A_expList tmpit = exp->u.iff.then; tmpit; tmpit = tmpit->next)
+                    _push_ircode(&irc, _do_parse_A_exp(tmpit->exp, regs, 1)); // T [s]
+                push_ircode(&irc, irilabel, tmp_irvar[0], NULL, irlabel, NULL); // label Lend
+            } else {
+            /* if then else */
+                _push_ircode(&irc, _do_parse_A_exp(exp->u.iff.test, regs, 1)); // T [e]
+                tmp_irvar[1].regs = regs;
+                sprintf(tmp_irvar[0].label, "Lfalse%d", label_gen_count);
+                push_ircode(&irc, irfjmp, tmp_irvar[0], create_irexpression(
+                    CSSvar,
+                    tmp_irvar[1], irregs,
+                    tmp_irvar[2], irnone
+                ), irlabel, NULL);
+                for(A_expList tmpit = exp->u.iff.then; tmpit; tmpit = tmpit->next)
+                    _push_ircode(&irc, _do_parse_A_exp(tmpit->exp, regs, 1)); // T [s]
+                sprintf(tmp_irvar[0].label, "Lend%d", label_gen_count);
+                push_ircode(&irc, irjmp, tmp_irvar[0], create_irexpression(
+                    CSSvar,
+                    tmp_irvar[1], irnone,
+                    tmp_irvar[2], irnone
+                ), irlabel, NULL); // jmp Lend
+                sprintf(tmp_irvar[0].label, "Lfalse%d", label_gen_count);
+                push_ircode(&irc, irilabel, tmp_irvar[0], NULL, irlabel, NULL); // label false
+                for(A_expList tmpit = exp->u.iff.elsee; tmpit; tmpit = tmpit->next)
+                    _push_ircode(&irc, _do_parse_A_exp(tmpit->exp, regs, 1)); // T [s]
+                sprintf(tmp_irvar[0].label, "Lend%d", label_gen_count);
+                push_ircode(&irc, irilabel, tmp_irvar[0], NULL, irlabel, NULL); // label end
+            }
+            label_gen_count++;
+
         break;
         case A_whileExp:
-            // new_label[0] = malloc(sizeof(char) * MAX_VAR_LENGTH);
-            // new_label[1] = malloc(sizeof(char) * MAX_VAR_LENGTH);
             sprintf(tmp_irvar[0].label, "Ltest%d", label_gen_count);
             push_ircode(&irc, irilabel, tmp_irvar[0], NULL, irlabel, NULL); // label Ltest
             _push_ircode(&irc, _do_parse_A_exp(exp->u.whilee.test, regs, 1)); // T [e]
