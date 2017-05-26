@@ -16,11 +16,12 @@ IRFunctions* do_gen_ir(A_expList expList) {
         exp = it->exp;
         assert(exp->kind == A_callExp);
         irc = NULL;
-        for(A_expList it2 = exp->u.call.args; it; it = it->next) {
+        for(A_expList it2 = exp->u.call.args; it2; it2 = it2->next) {
             exp2 = it2->exp;
             _push_ircode(&irc, _do_parse_A_exp(exp2, 1, 0));
         }
         irf = create_function(exp->u.call.func, irc);
+        printf("push %s\n", exp->u.call.func);
         push_function(&irfuncs, irf);
     }
 }
@@ -44,7 +45,7 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
     switch (exp->kind) {
         case A_varExp:
         case A_intExp:
-            assert(1 == 2);
+            //assert(1 == 2);
         case A_callExp:
             break;
         case A_opExp:
@@ -85,6 +86,10 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
         case A_structExp:
         break;
     }
+    if(!irc) {
+        return create_ircode(irnone, tmp_irvar[0], NULL, NULL);
+    }
+    return irc;
 }
 
 IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next) {
