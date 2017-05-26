@@ -19,9 +19,19 @@ typedef struct BlockDesc {
   int block_id;
 } BlockDesc;
 
+typedef struct livenessVariable{
+    struct livenessVariable *next;
+    CSSIdent var;
+} livenessVariable;
+
+typedef livenessVariable *liveVar;
 
 _leaderList *leaders = NULL;
+
 int leaders_count = 0;
+int is_changed = 0;
+int *visited_blocks = NULL;
+
 Block block;
 
 int compare (const void * a, const void * b) { 
@@ -78,12 +88,15 @@ Block find_block_by_leader_id(Block *blocks, int block_cnt, int id) {
     return NULL; 
 }
 
-typedef struct livenessVariable{
-    struct livenessVariable *next;
-    CSSIdent var;
-} livenessVariable;
+void print_variables(liveVar header){
+    liveVar cur_live = header->next;
+    while(cur_live != NULL){
+        printf(" %s", cur_live->var);
+        cur_live = cur_live->next;
+    }
+    printf("\n");
+}
 
-typedef livenessVariable *liveVar;
 
 liveVar create_live_var(){
     liveVar new_live = malloc(sizeof(struct livenessVariable *));
@@ -93,7 +106,7 @@ liveVar create_live_var(){
 
 liveVar union_var(liveVar first_header, liveVar second_header){
     liveVar temp_header = create_live_var();
-    liveVar cur_temp_header = temp_header->next;
+    liveVar cur_temp_header = temp_header;
     liveVar cur_second_header = second_header;
     while(cur_second_header != NULL){
         int dup_var = 0;
@@ -106,38 +119,54 @@ liveVar union_var(liveVar first_header, liveVar second_header){
             cur_first_header = cur_first_header->next;
         }
         if(!dup_var){
-            cur_temp_header = create_live_var();
-            strcpy(cur_temp_header->var, cur_second_header->var);
+            cur_temp_header->next = create_live_var();
             cur_temp_header = cur_temp_header->next;
+            strcpy(cur_temp_header->var, cur_second_header->var);
         }
         cur_second_header = cur_second_header->next;
     }
-    liveVar cur_first_header = first_header->next;
+    liveVar cur_first_header = first_header;
     while(cur_first_header != NULL){
-        cur_temp_header = create_live_var();
-        strcpy(cur_temp_header->var, cur_first_header->var);
+        cur_temp_header->next = create_live_var();
         cur_temp_header = cur_temp_header->next;
+        strcpy(cur_temp_header->var, cur_first_header->var);
         cur_first_header = cur_first_header->next;
     }
-    return temp_header->next;
+    return temp_header;
 }
 
 void cut_name(liveVar header, CSSIdent name){
     liveVar cur_live = header;
-    while(cur_live->next != NULL){
+    while(cur_live != NULL && cur_live->next != NULL){
         if(strcmp(cur_live->next->var, name) == 0){
+            liveVar live_to_free = cur_live->next;
             cur_live->next = cur_live->next->next;
+            free(live_to_free);
             return ;
         }
+        cur_live = cur_live->next;
     }
 }
 
+int visit_block(int block_id){
+    if(visited_blocks == NULL){
+        visited_blocks = malloc(sizeof(int) * leaders_count);
+        return 0;
+    }
+    if(visited_blocks[block_id] == 1){
+        return 1;
+    }
+    return 0;
+}
+
 liveVar analyze_liveness(Block cur_block){
-    printf("World: %d\n", cur_block->block_id);
     if(cur_block == NULL) return create_live_var();
+    if(visit_block(cur_block->block_id)){
+        return create_live_var();
+    }
     CSGNode it = cur_block->last;
-    printf("%d :: %d %d\n", cur_block->block_id, cur_block->fail->block_id, cur_block->branch->block_id);
-    printf("Hello World\n");
+    // printf("%d\n", cur_block->block_id);
+    visited_blocks[cur_block->block_id] = 1;
     liveVar fail_header = analyze_liveness(cur_block->fail);
     liveVar branch_header = analyze_liveness(cur_block->branch);
     liveVar header = union_var(fail_header->next, branch_header->next);
@@ -173,8 +202,11 @@ liveVar analyze_liveness(Block cur_block){
         if(it == cur_block->first) break;
         it = it->prv;
     }while(1);
+    printf("%d\n", cur_block->block_id);
+    print_variables(header);
     return header;
 }
+
 
 void print_CFG(Block* blocks) {
     CSGNode it;
