@@ -118,7 +118,39 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                             irvar, NULL);
             } else {
                 A_exp array_exp = exp->u.assign.var;
-                _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs, 1));
+                _push_ircode(&irc, _do_parse_A_exp(exp->u.array.exp, regs + 1, 1));
+
+
+                strcpy(tmp_irvar[0].name, exp->u.array.var->u.var);
+                tmp_irvar[1].regs = regs + 2;
+                // load $t2 base_var
+                push_ircode(&irc, irload, tmp_irvar[0], create_irexpression(
+                    CSSmanual, tmp_irvar[1], irregs, tmp_irvar[2], irnone
+                ), irarray, NULL);
+
+                // $t3 = $t1 * 4 
+                tmp_irvar[0].regs = regs + 3;
+                tmp_irvar[1].regs = regs + 1;
+                tmp_irvar[2].cons = 4;
+                push_ircode(&irc, irassign, tmp_irvar[0], create_irexpression(
+                    CSStimes, tmp_irvar[1], irregs, tmp_irvar[2], ircons
+                ), irregs, NULL);
+
+                // $t4 = $t3 + $t2
+                tmp_irvar[0].regs = regs + 4;
+                tmp_irvar[1].regs = regs + 2;
+                tmp_irvar[2].regs = regs + 3;
+                push_ircode(&irc, irassign, tmp_irvar[0], create_irexpression(
+                    CSSplus, tmp_irvar[1], irregs, tmp_irvar[2], irregs
+                ), irregs, NULL);
+
+                // store $t0 $t4
+                tmp_irvar[0].regs = regs;
+                tmp_irvar[1].regs = regs + 4;
+                push_ircode(&irc, irstore, tmp_irvar[0], create_irexpression(
+                    CSSmanual, tmp_irvar[1], irregs, tmp_irvar[2], irnone
+                ), irregs, NULL);
+                /*
                 _push_ircode(&irc, _do_parse_A_exp(array_exp->u.array.exp, regs + 1, 1));
                 strcpy(tmp_irvar[0].name, array_exp->u.array.var->u.var);
                 tmp_irvar[1].regs = (regs + 1);
@@ -129,6 +161,7 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                                 tmp_irvar[0], irvar,
                                 tmp_irvar[1], irregs),
                             irregs, NULL);
+                */
             }
         break;
         case A_ifExp:
@@ -201,22 +234,58 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
             assert(exp->kind == A_arrayExp);
             assert(exp->u.array.var->kind == A_varExp);
             tmp_irvar[0].regs = regs;
-            strcpy(tmp_irvar[1].name, exp->u.array.var->u.var);
             tmp_irvar[2].regs = regs + 1;
             _push_ircode(&irc, _do_parse_A_exp(exp->u.array.exp, regs + 1, 1));
+            {
+                
+                strcpy(tmp_irvar[0].name, exp->u.array.var->u.var);
+                tmp_irvar[1].regs = regs + 2;
+                // load $t2 base_var
+                push_ircode(&irc, irload, tmp_irvar[0], create_irexpression(
+                    CSSmanual, tmp_irvar[1], irregs, tmp_irvar[2], irnone
+                ), irarray, NULL);
+
+                // $t3 = $t1 * 4 
+                tmp_irvar[0].regs = regs + 3;
+                tmp_irvar[1].regs = regs + 1;
+                tmp_irvar[2].cons = 4;
+                push_ircode(&irc, irassign, tmp_irvar[0], create_irexpression(
+                    CSStimes, tmp_irvar[1], irregs, tmp_irvar[2], ircons
+                ), irregs, NULL);
+
+                // $t4 = $t3 + $t2
+                tmp_irvar[0].regs = regs + 4;
+                tmp_irvar[1].regs = regs + 2;
+                tmp_irvar[2].regs = regs + 3;
+                push_ircode(&irc, irassign, tmp_irvar[0], create_irexpression(
+                    CSSplus, tmp_irvar[1], irregs, tmp_irvar[2], irregs
+                ), irregs, NULL);
+
+                // load $t0 $t4
+                tmp_irvar[0].regs = regs;
+                tmp_irvar[1].regs = regs + 4;
+                push_ircode(&irc, irload, tmp_irvar[0], create_irexpression(
+                    CSSmanual, tmp_irvar[1], irregs, tmp_irvar[2], irnone
+                ), irregs, NULL);
+            }
+            /*
             push_ircode(&irc, irarray_access, tmp_irvar[0], create_irexpression(
                 CSSarray, tmp_irvar[1], irvar, tmp_irvar[2], irregs
             ), irregs, NULL);
-
+            */
         break;
         case A_op1Exp:
             printf("Not Implement yet\n");
+            exit(-1);
         break;
         case A_structExp:
             printf("Not Implement yet\n");
+            exit(-1);
+        break;
         break;
     }
     if(!irc) {
+        printf("[Warning] some AST not implemented\n");
         return create_ircode(irinop, tmp_irvar[0], NULL, irnone, NULL);
     }
     return irc;
@@ -321,8 +390,25 @@ void do_print_ircode(IRCode *ircodes) {
                 printf("$sp = $sp - %d", push_count * 4);
             }
                 break;
+            case irload:
+            {
+                printf("load ");
+                do_print_irvar(it->e1->e1, it->e1->e1_type);
+                printf(" ");
+                do_print_irvar(it->u, it->utype);
+            }
+                break;
+            case irstore:
+            {
+                printf("store ");
+                do_print_irvar(it->e1->e1, it->e1->e1_type);
+                printf(" ");
+                do_print_irvar(it->u, it->utype);
+                }
+            break;
             case irarray_access:
             {
+                assert(0);
                 IRExpression *ire = it->e1;
                 int reg_num = ire->e2.regs;
                 printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
@@ -337,6 +423,7 @@ void do_print_ircode(IRCode *ircodes) {
                 break;
             case irarray_assign:
             {
+                assert(0);
                 IRExpression *ire = it->e1;
                 int reg_num = ire->e2.regs;
                 printf("load $t%d base_%s\n", reg_num + 1, ire->e1.name);
@@ -447,6 +534,9 @@ void do_print_irvar(union IRVar var, enum IRVarType type) {
             break;
         case irregs:
             printf("$t%d", var.regs);
+            break;
+        case irarray:
+            printf("base_%s", var.name);
             break;
         case irnone:
             printf("irnone - -a\n");
