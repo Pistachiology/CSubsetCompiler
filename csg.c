@@ -47,7 +47,7 @@ CSGNode CSGpc;
 
 enum {ineg, iadd, isub, imul, idiv, imod, iparam, ienter, ileave, iend, iload, istore, imove,
       icmpeq, icmplt, icmple, iblbs, iblbc, icall, ibr, iret, iread, iwrite, iwrl, inop, ige, igeq, 
-      icmpge, icmpgt, iminus};
+      icmpge, icmpgt, iminus, icmpneq};
 
 static CSGNode entrypc, FP, GP;
 CSGNode code;

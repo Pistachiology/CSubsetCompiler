@@ -5,7 +5,9 @@
 #include <assert.h>
 
 #include "ir.h"
+#include "css.h"
 IRFunction irfuncs;
+int label_gen_count = 0;
 
 IRFunctions* do_gen_ir(A_expList expList) {
     A_exp exp, exp2;
@@ -44,12 +46,13 @@ IRExpression* _do_parse_ire(A_exp exp, int regs, int is_store) {
 IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
     IRCode *irc = NULL;
     union IRVar tmp_irvar[3];
+    char *new_label[3]; 
     switch (exp->kind) {
         case A_varExp:
             tmp_irvar[0].regs = regs;
             strcpy(tmp_irvar[1].name, exp->u.var);
             push_ircode(&irc, irassign, tmp_irvar[0],
-                create_irexpression(ivar,
+                create_irexpression(CSSvar,
                     tmp_irvar[1], irvar,
                     tmp_irvar[2], irnone
                 )
@@ -59,7 +62,7 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
             tmp_irvar[0].regs = regs;
             tmp_irvar[1].cons = exp->u.intt;
             push_ircode(&irc, irassign, tmp_irvar[0],
-                create_irexpression(ivar,
+                create_irexpression(CSSvar,
                     tmp_irvar[1], ircons,
                     tmp_irvar[2], irnone
                 )
@@ -83,13 +86,13 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
         break;
         case A_assignExp:
             assert(exp->u.assign.var->kind == A_varExp);
-            _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs + 1, 1));
+            _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs, 1));
             strcpy(tmp_irvar[0].name, exp->u.assign.var->u.var);
-            tmp_irvar[1].regs = (regs + 1);
+            tmp_irvar[1].regs = (regs);
             tmp_irvar[2].regs = (0);
             push_ircode(&irc, irassign, tmp_irvar[0], 
                 create_irexpression(
-                    ivar, 
+                    CSSvar, 
                     tmp_irvar[1], irregs,
                     tmp_irvar[2], irnone
                 ), irvar,NULL);
@@ -98,6 +101,29 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
         case A_ifExp:
         break;
         case A_whileExp:
+            // new_label[0] = malloc(sizeof(char) * MAX_VAR_LENGTH);
+            // new_label[1] = malloc(sizeof(char) * MAX_VAR_LENGTH);
+            sprintf(tmp_irvar[0].label, "Ltest%d", label_gen_count);
+            push_ircode(&irc, irilabel, tmp_irvar[0], NULL, irlabel, NULL); // label Ltest
+            _push_ircode(&irc, _do_parse_A_exp(exp->u.whilee.test, regs, 1)); // T [e]
+            sprintf(tmp_irvar[0].label, "Lend%d", label_gen_count);
+            tmp_irvar[1].regs = regs;
+            push_ircode(&irc, irfjmp, tmp_irvar[0], create_irexpression(
+                CSSvar,
+                tmp_irvar[1], irregs,
+                tmp_irvar[2], irnone
+            ), irlabel, NULL);
+            for(A_expList tmpit = exp->u.whilee.body; tmpit; tmpit = tmpit->next)
+                _push_ircode(&irc, _do_parse_A_exp(tmpit->exp, regs, 1)); // T [s]
+            sprintf(tmp_irvar[0].label, "Ltest%d", label_gen_count);
+            push_ircode(&irc, irjmp, tmp_irvar[0], create_irexpression(
+                CSSvar,
+                tmp_irvar[1], irnone,
+                tmp_irvar[2], irnone
+            ), irlabel, NULL);
+            sprintf(tmp_irvar[0].label, "Lend%d", label_gen_count);
+            push_ircode(&irc, irilabel, tmp_irvar[0], NULL, irlabel, NULL); // label Ltest
+            label_gen_count++;
         break;
         case A_arrayExp:
         break;
@@ -180,28 +206,41 @@ void do_print_ircode(IRCode *ircodes) {
                 do_print_irvar(it->u, it->utype);
                 printf(" = ");
                 do_print_irexpression(it->e1); 
-                printf("\n");
+                break;
+            case irfjmp:
+                printf("fjump ");
+                do_print_irexpression(it->e1);
+                printf(" ");
+                do_print_irvar(it->u, it->utype);
+                break;
+            case irjmp:
+                printf("jump ");
+                do_print_irvar(it->u, it->utype);
+                break;
+            case irilabel:
+                printf("label ");
+                do_print_irvar(it->u, it->utype);
                 break;
             default:
-                printf("ir_nop\n");
+                printf("ir_nop");
         }
+        printf("\n");
         it = it->next; 
     }
 }
 
 void do_print_irexpression(IRExpression* ire) {
     switch(ire->irop) {
-        case ivar:
+        case CSSvar:
             do_print_irvar(ire->e1, ire->e1_type);
         break; 
-        case iadd:
-        case imod:
+        case CSSneq:
             do_print_irvar(ire->e1, ire->e1_type);
-            printf("+");
+            printf(" != ");
             do_print_irvar(ire->e2, ire->e2_type);
         break;
         default:
-            printf("working :<");
+            printf("working :< %d", ire->irop);
 
     }
 }

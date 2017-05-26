@@ -6,7 +6,7 @@
 
 enum IRInstruction {
     irfjmp, irtjmp, irjmp, irassign, irarray_assign, ircjmp, irarray_access,
-    irfield_access, iraddr_ins, ircopy, irload, irstore, 
+    irfield_access, iraddr_ins, ircopy, irload, irstore, irilabel
 };
 
 enum IRVarType {
