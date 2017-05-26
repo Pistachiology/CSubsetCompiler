@@ -6,11 +6,11 @@
 
 enum IRInstruction {
     irfjmp, irtjmp, irjmp, irassign, irarray_assign, ircjmp, irarray_access,
-    irfield_access, iraddr_ins, ircopy, irload, irstore, irilabel
+    irfield_access, iraddr_ins, ircopy, irload, irstore, irilabel, irinop, ircall
 };
 
 enum IRVarType {
-    irvar, ircons, irlabel, irregs, irexpr, irnone
+    irvar, ircons, irlabel, irregs, irexpr, irnone, ircall_args
 };
 
 /*
@@ -26,7 +26,13 @@ union IRVar {
     char regs;
     char name[MAX_VAR_LENGTH];
     char label[MAX_VAR_LENGTH];
-    struct IRExpression *ire;
+    struct {
+        union {
+            int regs;
+            char name[MAX_VAR_LENGTH];
+        } u;
+        union IRVar *next;
+    } args;
 } ;
 
 struct IRExpression {
