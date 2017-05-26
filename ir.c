@@ -21,9 +21,11 @@ IRFunctions* do_gen_ir(A_expList expList) {
             _push_ircode(&irc, _do_parse_A_exp(exp2, 1, 0));
         }
         irf = create_function(exp->u.call.func, irc);
-        printf("push %s\n", exp->u.call.func);
         push_function(&irfuncs, irf);
+        printf("func %s\n", exp->u.call.func);
+        do_print_ircode(irc);
     }
+
 }
 
 IRExpression* _do_parse_ire(A_exp exp, int regs, int is_store) {
@@ -44,8 +46,26 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
     union IRVar tmp_irvar[3];
     switch (exp->kind) {
         case A_varExp:
+            tmp_irvar[0].regs = regs;
+            strcpy(tmp_irvar[1].name, exp->u.var);
+            push_ircode(&irc, irassign, tmp_irvar[0],
+                create_irexpression(ivar,
+                    tmp_irvar[1], irvar,
+                    tmp_irvar[2], irnone
+                )
+            , irregs,NULL);
+            break;
         case A_intExp:
+            tmp_irvar[0].regs = regs;
+            tmp_irvar[1].cons = exp->u.intt;
+            push_ircode(&irc, irassign, tmp_irvar[0],
+                create_irexpression(ivar,
+                    tmp_irvar[1], ircons,
+                    tmp_irvar[2], irnone
+                )
+            , irregs,NULL);
             //assert(1 == 2);
+            break;
         case A_callExp:
             break;
         case A_opExp:
@@ -59,12 +79,12 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                     exp->u.op.oper, 
                     tmp_irvar[1], irregs,
                     tmp_irvar[2], irregs
-                ), NULL);
+                ), irregs, NULL);
         break;
         case A_assignExp:
-            assert(exp->u.assign.var->kind == A_varExp || exp->u.assign.var->kind == A_intExp);
+            assert(exp->u.assign.var->kind == A_varExp);
             _push_ircode(&irc, _do_parse_A_exp(exp->u.assign.exp, regs + 1, 1));
-            tmp_irvar[0].regs = (exp->u.assign.var->kind == A_varExp?irvar:ircons);
+            strcpy(tmp_irvar[0].name, exp->u.assign.var->u.var);
             tmp_irvar[1].regs = (regs + 1);
             tmp_irvar[2].regs = (0);
             push_ircode(&irc, irassign, tmp_irvar[0], 
@@ -72,7 +92,7 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
                     ivar, 
                     tmp_irvar[1], irregs,
                     tmp_irvar[2], irnone
-                ), NULL);
+                ), irvar,NULL);
 
         break;
         case A_ifExp:
@@ -87,16 +107,17 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
         break;
     }
     if(!irc) {
-        return create_ircode(irnone, tmp_irvar[0], NULL, NULL);
+        return create_ircode(irnone, tmp_irvar[0], NULL, irnone, NULL);
     }
     return irc;
 }
 
-IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next) {
+IRCode* create_ircode(enum IRInstruction iri, union IRVar u, IRExpression* e1, enum IRVarType utype, IRCode *next) {
     IRCode *irc = malloc(sizeof(IRCode));
     irc->iri = iri;
     irc->u = u;
     irc->e1 = e1;
+    irc->utype = utype;
     irc->next = next;
     return irc;
 }
@@ -109,10 +130,11 @@ IRExpression* create_irexpression(IROp irop, union IRVar e1, enum IRVarType e1_t
     ire->e1_type = e1_type;
     ire->e2_type = e2_type;
     ire->e2 = e2;
+    return ire;
 }
 
-void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression* e1, IRCode *next) {
-    IRCode *tmp = create_ircode(iri, u, e1, next);
+void push_ircode(IRCode **ircodes, enum IRInstruction iri, union IRVar u, IRExpression* e1, enum IRVarType utype, IRCode *next) {
+    IRCode *tmp = create_ircode(iri, u, e1, utype, next);
     _push_ircode(ircodes, tmp);
 }
 
@@ -146,5 +168,62 @@ void push_function(IRFunctions **irfs, IRFunction *irf) {
         it = it->next;
         it->irf = irf;
         it->next = NULL;
+    }
+}
+
+void do_print_ircode(IRCode *ircodes) {
+    IRCode *it = ircodes;
+    while(it) {
+        switch (it->iri)
+        {
+            case irassign:
+                do_print_irvar(it->u, it->utype);
+                printf(" = ");
+                do_print_irexpression(it->e1); 
+                printf("\n");
+                break;
+            default:
+                printf("ir_nop\n");
+        }
+        it = it->next; 
+    }
+}
+
+void do_print_irexpression(IRExpression* ire) {
+    switch(ire->irop) {
+        case ivar:
+            do_print_irvar(ire->e1, ire->e1_type);
+        break; 
+        case iadd:
+        case imod:
+            do_print_irvar(ire->e1, ire->e1_type);
+            printf("+");
+            do_print_irvar(ire->e2, ire->e2_type);
+        break;
+        default:
+            printf("working :<");
+
+    }
+}
+
+void do_print_irvar(union IRVar var, enum IRVarType type) {
+    switch(type) {
+        case irvar:
+            printf("%s", var.name);
+            break;
+        case ircons:
+            printf("%ld", var.cons);
+            break;
+        case irlabel:
+            printf("%s", var.label);
+            break;
+        case irregs:
+            printf("$t%d", var.regs);
+            break;
+        case irnone:
+            printf("irnone - -a\n");
+            break;
+        default:
+            printf("bug :(\n");
     }
 }
