@@ -883,7 +883,7 @@ int main(int argc, char *argv[])
   } else {
     Compile("test.c");
   }
-  // CSGDecode();
+  CSGDecode();
   
   // keep backup for old code
   CSGNode old_code = code;

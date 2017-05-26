@@ -275,8 +275,13 @@ IRCode* _do_parse_A_exp(A_exp exp, int regs, int is_store) {
             */
         break;
         case A_op1Exp:
-            printf("Not Implement yet\n");
-            exit(-1);
+            if(exp->u.op1.oper == CSSplus) return _do_parse_A_exp(exp->u.op1.left, regs, 1);
+            assert(exp->u.op1.left->kind == A_varExp);
+            tmp_irvar[0].regs = regs;
+            strcpy(tmp_irvar[1].name, exp->u.op1.left->u.var);
+            push_ircode(&irc, irminus, tmp_irvar[0], create_irexpression(
+                CSSmanual, tmp_irvar[1], irvar, tmp_irvar[2], irnone
+            ), irregs, NULL);
         break;
         case A_structExp:
             printf("Not Implement yet\n");
@@ -393,18 +398,23 @@ void do_print_ircode(IRCode *ircodes) {
             case irload:
             {
                 printf("load ");
-                do_print_irvar(it->e1->e1, it->e1->e1_type);
-                printf(" ");
                 do_print_irvar(it->u, it->utype);
+                printf(" ");
+                do_print_irvar(it->e1->e1, it->e1->e1_type);
             }
                 break;
             case irstore:
             {
                 printf("store ");
-                do_print_irvar(it->e1->e1, it->e1->e1_type);
-                printf(" ");
                 do_print_irvar(it->u, it->utype);
-                }
+                printf(" ");
+                do_print_irvar(it->e1->e1, it->e1->e1_type);
+            }
+            break;
+            case irminus:
+                do_print_irvar(it->u, it->utype);
+                printf(" = -");
+                do_print_irvar(it->e1->e1, it->e1->e1_type);
             break;
             case irarray_access:
             {
